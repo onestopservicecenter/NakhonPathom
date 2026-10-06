@@ -211,13 +211,12 @@
 
   function renderCards(items) {
     const grid = document.getElementById("lawGrid");
-    grid.innerHTML = items.map(item => `
-      <button class="circle-service" type="button" data-name="${item.name}" style="--tone:${item.tone}">
-        <span class="circle-icon">${svg(item.icon)}</span>
-        <strong>${item.name}</strong>
-        <small>ดูข้อมูลและเอกสาร</small>
-      </button>
-    `).join("");
+grid.innerHTML = items.map(item => `
+  <button class="circle-service" type="button" data-name="${item.name}" style="--tone:${item.tone}">
+    <span class="circle-icon">${svg(item.icon)}</span>
+    <strong>${item.name}</strong>
+  </button>
+`).join("");
 
     grid.querySelectorAll(".circle-service").forEach(card => {
       card.addEventListener("click", () => {
