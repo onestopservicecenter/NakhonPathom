@@ -179,7 +179,7 @@
           <div class="container">
             <div class="section-heading">
               <div>
-                <span>ONE STOP SERVICE CENTER</span>
+                <h1>ONE STOP SERVICE CENTER</h1>
                 <h1>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ</h1>
               </div>
             </div>
