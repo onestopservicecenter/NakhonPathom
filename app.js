@@ -152,16 +152,18 @@
               <img src="./assets/LogoOSSC.png" alt="OSSC นครปฐม" class="site-logo">
             </button>
 
-            <nav class="nav-links" id="navLinks">
-              <a href="https://share.google/XoRmJSs847Jfq91BR"
-                 target="_blank"
-                 rel="noopener noreferrer">
-                  หน้าหลัก
-              </a>
-              
-              <a href="#laws">ติดต่อเรา</a>
-              <button class="staff-link" id="staffButton" type="button">สำหรับเจ้าหน้าที่</button>
-            </nav>
+           <nav class="nav-links" id="navLinks">
+  <a href="#home">หน้าหลัก</a>
+  <a href="#laws">ศูนย์บริการ</a>
+  <a href="https://share.google/XoRmJSs847Jfq91BR"
+     target="_blank"
+     rel="noopener noreferrer">
+    ติดต่อเรา
+  </a>
+  <button class="staff-link" id="staffButton" type="button">
+    สำหรับเจ้าหน้าที่
+  </button>
+</nav>
 
             <button class="menu-button" id="menuButton" type="button" aria-label="เปิดเมนู">
               ${svg("menu")}
