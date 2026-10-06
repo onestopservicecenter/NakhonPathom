@@ -137,7 +137,8 @@
       menu: `<path d="M4 6h16M4 12h16M4 18h16"/>`,
       external: `<path d="M15 3h6v6"/><path d="m10 14 11-11"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>`,
       folder: `<path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>`,
-      chevronDown: `<path d="m6 9 6 6 6-6"/>`
+      chevronDown: `<path d="m6 9 6 6 6-6"/>`,
+      file: `<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h6"/>`
     };
     return `<svg ${common}>${paths[name] || paths.folder}</svg>`;
   }
@@ -174,22 +175,17 @@
           </div>
         </section>
 
-        <section class="laws-section" id="laws">
+        <section class="laws-section portal-section" id="laws">
           <div class="container">
             <div class="section-heading">
               <div>
                 <span>ONE STOP SERVICE CENTER</span>
                 <h1>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ</h1>
-                <p>เลือกหมวดบริการเพื่อดูขั้นตอน แบบฟอร์ม หลักเกณฑ์ และเอกสารที่เกี่ยวข้อง</p>
+                <p>เลือกหมวดบริการเพื่อดูข้อมูล ขั้นตอน แบบฟอร์ม คู่มือ และเอกสารที่เกี่ยวข้อง</p>
               </div>
-
-              <label class="search-box">
-                ${svg("search")}
-                <input id="searchInput" type="search" placeholder="ค้นหาหมวดบริการ" aria-label="ค้นหาหมวดบริการ">
-              </label>
             </div>
 
-            <div class="law-grid" id="lawGrid"></div>
+            <div class="circle-grid" id="lawGrid"></div>
           </div>
         </section>
 
@@ -209,19 +205,15 @@
 
   function renderCards(items) {
     const grid = document.getElementById("lawGrid");
-    grid.innerHTML = items.map((item, index) => `
-      <button class="law-card" type="button" data-name="${item.name}" style="--tone:${item.tone}">
-        <div class="law-card-top">
-          <span class="law-icon">${svg(item.icon)}</span>
-          <span class="law-number">${String(categories.indexOf(item) + 1).padStart(2, "0")}</span>
-        </div>
-        <h2>${item.name}</h2>
-        <p>ขั้นตอน แบบฟอร์ม หลักเกณฑ์ และคู่มือ</p>
-        <span class="law-open">เปิดรายละเอียด ${svg("arrowRight")}</span>
+    grid.innerHTML = items.map(item => `
+      <button class="circle-service" type="button" data-name="${item.name}" style="--tone:${item.tone}">
+        <span class="circle-icon">${svg(item.icon)}</span>
+        <strong>${item.name}</strong>
+        <small>ดูข้อมูลและเอกสาร</small>
       </button>
     `).join("");
 
-    grid.querySelectorAll(".law-card").forEach(card => {
+    grid.querySelectorAll(".circle-service").forEach(card => {
       card.addEventListener("click", () => {
         const item = categories.find(c => c.name === card.dataset.name);
         if (item) renderDetail(item);
@@ -247,11 +239,6 @@
 
     document.querySelectorAll("#bannerDots button").forEach(dot => {
       dot.addEventListener("click", () => setBanner(Number(dot.dataset.index)));
-    });
-
-    document.getElementById("searchInput").addEventListener("input", e => {
-      const keyword = e.target.value.trim().toLowerCase();
-      renderCards(categories.filter(c => c.name.toLowerCase().includes(keyword)));
     });
   }
 
@@ -289,7 +276,7 @@
 
   function renderDetail(item) {
     clearInterval(timer);
-    const hasDetailedDocs = item.name === "สถานประกอบการเพื่อสุขภาพ";
+    const detailed = item.name === "สถานประกอบการเพื่อสุขภาพ";
 
     ROOT.innerHTML = `
       <main>
@@ -303,38 +290,42 @@
         </header>
 
         <section class="law-detail">
-          <div class="law-hero">
-            <img src="${item.banner}" alt="แบนเนอร์ ${item.name}">
-          </div>
+          <div class="law-hero"><img src="${item.banner}" alt="แบนเนอร์ ${item.name}"></div>
 
-          <div class="container law-detail-wrap">
-            <button class="back-button" id="backButton" type="button">${svg("arrowLeft")} กลับหน้ารวม</button>
+          <div class="container directory-wrap" style="--tone:${item.tone}">
+            <button class="back-button" id="backButton" type="button">${svg("arrowLeft")} กลับศูนย์บริการ</button>
 
-            <div class="law-title" style="--tone:${item.tone}">
-              <span>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ</span>
-              <h1>${item.name}</h1>
-              <p>รวมขั้นตอน แบบฟอร์ม หลักเกณฑ์ คู่มือ และเอกสารที่เกี่ยวข้อง</p>
+            <div class="directory-bar">${item.name.toUpperCase()} DIRECTORY</div>
+
+            <div class="directory-search">
+              <strong>ค้นหา:</strong>
+              <select aria-label="ประเภทการค้นหา">
+                <option>หัวข้อบริการ</option>
+                <option>ชื่อเอกสาร</option>
+              </select>
+              <input id="detailSearch" type="search" placeholder="พิมพ์คำค้นหา">
+              <button id="detailSearchButton" type="button">${svg("search")}</button>
             </div>
 
-            <div class="accordion-grid">
+            <div class="directory-summary">
+              <span>แสดงรายการหัวข้อบริการ</span>
+              <strong>ทั้งหมด ${sectionNames.length} หัวข้อ</strong>
+            </div>
+
+            <div class="directory-list" id="directoryList">
               ${sectionNames.map((section, i) => {
-                const docs = hasDetailedDocs ? (healthEstablishmentDocs[section] || []) : [];
+                const docs = detailed ? (healthEstablishmentDocs[section] || []) : [];
                 return `
-                  <article class="accordion-card ${i === 0 ? "open" : ""}">
-                    <button type="button" class="accordion-toggle">
-                      <span>${section}</span>
-                      ${svg("chevronDown")}
+                  <article class="directory-card" data-section="${section}">
+                    <button class="directory-card-main" type="button">
+                      <span class="directory-card-icon">${svg("folder")}</span>
+                      <span class="directory-card-copy">
+                        <small>หัวข้อ ${String(i + 1).padStart(2,"0")}</small>
+                        <strong>${section}</strong>
+                        <span>${docs.length ? `มีรายการเอกสาร ${docs.length} รายการ` : "เปิดดูข้อมูลและเอกสารในหมวดนี้"}</span>
+                      </span>
+                      <span class="directory-open">เปิดดู ${svg("arrowRight")}</span>
                     </button>
-                    <div class="accordion-content">
-                      ${
-                        docs.length
-                          ? `<ul>${docs.map(doc => `<li>${svg("folder")}<span>${doc}</span></li>`).join("")}</ul>`
-                          : `<div class="empty-docs"><p>เปิดโฟลเดอร์ Google Drive เพื่อดูเอกสารล่าสุดของหมวดนี้</p></div>`
-                      }
-                      <a class="drive-button" href="https://drive.google.com/drive/folders/${item.folder}" target="_blank" rel="noopener noreferrer">
-                        เปิดโฟลเดอร์ ${item.name} ใน Google Drive ${svg("external")}
-                      </a>
-                    </div>
                   </article>
                 `;
               }).join("")}
@@ -344,17 +335,92 @@
       </main>
     `;
 
-    document.getElementById("detailHomeButton").addEventListener("click", renderHome);
-    document.getElementById("backTop").addEventListener("click", renderHome);
-    document.getElementById("backButton").addEventListener("click", renderHome);
+    document.getElementById("detailHomeButton").onclick = renderHome;
+    document.getElementById("backTop").onclick = renderHome;
+    document.getElementById("backButton").onclick = renderHome;
 
-    document.querySelectorAll(".accordion-card").forEach(card => {
-      const button = card.querySelector(".accordion-toggle");
-      button.addEventListener("click", () => {
-        card.classList.toggle("open");
-      });
+    document.querySelectorAll(".directory-card-main").forEach(btn => {
+      btn.onclick = () => renderSection(item, btn.closest(".directory-card").dataset.section);
     });
 
+    const input = document.getElementById("detailSearch");
+    const filter = () => {
+      const q = input.value.trim().toLowerCase();
+      document.querySelectorAll(".directory-card").forEach(card => {
+        card.hidden = !!q && !card.dataset.section.toLowerCase().includes(q);
+      });
+    };
+    input.oninput = filter;
+    document.getElementById("detailSearchButton").onclick = filter;
+
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+
+  function renderSection(item, section) {
+    const docs = item.name === "สถานประกอบการเพื่อสุขภาพ"
+      ? (healthEstablishmentDocs[section] || [])
+      : [];
+
+    ROOT.innerHTML = `
+      <main>
+        <header class="main-header">
+          <div class="container nav-wrap detail-nav">
+            <button class="brand" id="sectionHomeButton" type="button">
+              <img src="./assets/LogoOSSC.png" alt="OSSC นครปฐม" class="site-logo">
+            </button>
+            <button class="back-top" id="backCategory" type="button">${svg("arrowLeft")} กลับ ${item.name}</button>
+          </div>
+        </header>
+
+        <section class="law-detail">
+          <div class="law-hero"><img src="${item.banner}" alt="แบนเนอร์ ${item.name}"></div>
+          <div class="container section-view" style="--tone:${item.tone}">
+            <button class="back-button" id="backCategory2" type="button">${svg("arrowLeft")} กลับ ${item.name}</button>
+
+            <div class="section-head">
+              <span>${item.name}</span>
+              <h1>${section}</h1>
+              <p>รายการข้อมูลและเอกสารที่เกี่ยวข้อง</p>
+            </div>
+
+            ${docs.length ? `
+              <div class="document-list">
+                ${docs.map((doc, i) => `
+                  <button class="document-row" type="button" disabled>
+                    <span class="document-icon">${svg("file")}</span>
+                    <span class="document-copy">
+                      <small>เอกสาร ${String(i + 1).padStart(2,"0")}</small>
+                      <strong>${doc}</strong>
+                    </span>
+                    <span class="document-action">ยังไม่มีลิงก์ไฟล์จริง</span>
+                  </button>
+                `).join("")}
+              </div>
+            ` : `
+              <div class="drive-panel">
+                <div class="drive-panel-head">
+                  <div>
+                    <strong>เอกสารจาก Google Drive</strong>
+                    <span>แสดงข้อมูลจากโฟลเดอร์จริงของหมวด ${item.name}</span>
+                  </div>
+                  <a href="https://drive.google.com/drive/folders/${item.folder}" target="_blank" rel="noopener noreferrer">
+                    เปิดใน Google Drive ${svg("external")}
+                  </a>
+                </div>
+                <iframe class="drive-frame"
+                  src="https://drive.google.com/embeddedfolderview?id=${item.folder}#list"
+                  title="เอกสาร ${item.name}"
+                  loading="lazy"></iframe>
+              </div>
+            `}
+          </div>
+        </section>
+      </main>
+    `;
+
+    document.getElementById("sectionHomeButton").onclick = renderHome;
+    document.getElementById("backCategory").onclick = () => renderDetail(item);
+    document.getElementById("backCategory2").onclick = () => renderDetail(item);
     window.scrollTo({ top: 0, behavior: "instant" });
   }
 
