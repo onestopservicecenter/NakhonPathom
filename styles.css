@@ -509,6 +509,141 @@ img{max-width:100%}
 .document-row:disabled{opacity:1;cursor:default}.document-icon{width:54px;height:54px;border-radius:12px;background:#f2f7f5;color:var(--tone);display:grid;place-items:center}.document-icon svg{width:27px;height:27px}.document-copy small,.document-copy strong{display:block}.document-copy small{color:#879691}.document-copy strong{margin-top:3px}.document-action{color:#8a9895;font-weight:700}
 .drive-panel{border:1px solid #d7e4df;background:#fff;border-radius:15px;overflow:hidden}.drive-panel-head{padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-bottom:1px solid #e8efec}.drive-panel-head strong,.drive-panel-head span{display:block}.drive-panel-head span{font-size:.88rem;color:#758884;margin-top:2px}.drive-panel-head a{display:flex;align-items:center;gap:7px;color:var(--tone);font-weight:700;text-decoration:none}.drive-panel-head svg{width:16px;height:16px}.drive-frame{width:100%;height:620px;border:0;background:#fff}
 
-@media(max-width:1000px){.circle-grid{grid-template-columns:repeat(3,1fr)}.circle-icon{width:140px;height:140px}}
-@media(max-width:720px){.circle-grid{grid-template-columns:repeat(2,1fr);gap:22px 12px}.circle-icon{width:124px;height:124px}.circle-icon svg{width:60px;height:60px}.directory-search{grid-template-columns:1fr 46px}.directory-search strong,.directory-search select{display:none}.directory-card-main{grid-template-columns:70px 1fr}.directory-open{grid-column:2}.document-row{grid-template-columns:54px 1fr}.document-action{grid-column:2}.drive-panel-head{align-items:flex-start;flex-direction:column}.drive-frame{height:520px}}
-@media(max-width:430px){.circle-icon{width:112px;height:112px}.circle-icon svg{width:54px;height:54px}.circle-service strong{font-size:.96rem}}
+@media(max-width:1000px){
+  .circle-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .circle-icon{
+    width:140px;
+    height:140px;
+  }
+}
+
+@media(max-width:720px){
+  .circle-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:22px 12px;
+  }
+
+  .circle-icon{
+    width:124px;
+    height:124px;
+  }
+
+  .circle-icon svg{
+    width:60px;
+    height:60px;
+  }
+
+  .directory-search{
+    grid-template-columns:1fr 46px;
+  }
+
+  .directory-search strong,
+  .directory-search select{
+    display:none;
+  }
+
+  .directory-card-main{
+    grid-template-columns:70px 1fr;
+  }
+
+  .directory-open{
+    grid-column:2;
+  }
+
+  .document-row{
+    grid-template-columns:54px 1fr;
+  }
+
+  .document-action{
+    grid-column:2;
+  }
+
+  .drive-panel-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .drive-frame{
+    height:520px;
+  }
+}
+
+@media(max-width:430px){
+  .circle-icon{
+    width:112px;
+    height:112px;
+  }
+
+  .circle-icon svg{
+    width:54px;
+    height:54px;
+  }
+
+  .circle-service strong{
+    font-size:.96rem;
+  }
+}
+
+
+/* ===== FORCE LARGE OSSC LOGO ===== */
+
+/* Desktop */
+.main-header .nav-wrap{
+  width:100% !important;
+  max-width:none !important;
+  min-height:110px !important;
+  margin:0 !important;
+  padding:0 30px !important;
+}
+
+.main-header .brand{
+  margin-right:auto !important;
+  padding:0 !important;
+  display:flex !important;
+  align-items:center !important;
+  overflow:visible !important;
+}
+
+.main-header .site-logo{
+  width:420px !important;
+  max-width:none !important;
+  height:auto !important;
+  display:block !important;
+  object-fit:contain !important;
+  object-position:left center !important;
+}
+
+
+/* Tablet */
+@media(max-width:1000px){
+  .main-header .nav-wrap{
+    min-height:92px !important;
+    padding:0 20px !important;
+  }
+
+  .main-header .site-logo{
+    width:330px !important;
+  }
+}
+
+
+/* Mobile */
+@media(max-width:720px){
+  .main-header .nav-wrap{
+    min-height:82px !important;
+    padding:0 14px !important;
+  }
+
+  .main-header .site-logo{
+    width:270px !important;
+  }
+}
+
+@media(max-width:430px){
+  .main-header .site-logo{
+    width:235px !important;
+  }
+}
