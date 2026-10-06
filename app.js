@@ -153,8 +153,13 @@
             </button>
 
             <nav class="nav-links" id="navLinks">
-              <a href="#home">หน้าหลัก</a>
-              <a href="#laws">ศูนย์บริการ</a>
+              <a href="https://share.google/XoRmJSs847Jfq91BR"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                  ติดต่อเรา
+              </a>
+              
+              <a href="#laws">ติดต่อเรา</a>
               <button class="staff-link" id="staffButton" type="button">สำหรับเจ้าหน้าที่</button>
             </nav>
 
