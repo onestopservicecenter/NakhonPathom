@@ -156,7 +156,7 @@
               <a href="https://share.google/XoRmJSs847Jfq91BR"
                  target="_blank"
                  rel="noopener noreferrer">
-                  ติดต่อเรา
+                  หน้าหลัก
               </a>
               
               <a href="#laws">ติดต่อเรา</a>
