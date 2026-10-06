@@ -6,7 +6,7 @@
 
   const banners = [
     "./assets/banners/consumer-protection.gif",
-    "./assets/banners/food.gif",
+    "./assets/banners/food.gif", 
     "./assets/banners/medicine.gif",
     "./assets/banners/herbal-products.gif",
     "./assets/banners/cosmetics.gif",
