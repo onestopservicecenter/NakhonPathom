@@ -211,22 +211,32 @@
     startBannerTimer();
   }
 
-  function renderCards(items) {
-    const grid = document.getElementById("lawGrid");
-grid.innerHTML = items.map(item => `
-  <button class="circle-service" type="button" data-name="${item.name}" style="--tone:${item.tone}">
-    <span class="circle-icon">${svg(item.icon)}</span>
-    <strong>${item.name}</strong>
-  </button>
-`).join("");
+ function renderCards(items) {
+  const grid = document.getElementById("lawGrid");
 
-    grid.querySelectorAll(".circle-service").forEach(card => {
-      card.addEventListener("click", () => {
-        const item = categories.find(c => c.name === card.dataset.name);
-        if (item) renderDetail(item);
-      });
+  grid.innerHTML = items.map((item, index) => `
+    <button
+      class="circle-service"
+      type="button"
+      data-name="${item.name}"
+      aria-label="${item.name}"
+    >
+      <img
+        src="./assets/icons/${index + 1}.png"
+        alt="${item.name}"
+        class="service-image"
+        loading="lazy"
+      >
+    </button>
+  `).join("");
+
+  grid.querySelectorAll(".circle-service").forEach(card => {
+    card.addEventListener("click", () => {
+      const item = categories.find(c => c.name === card.dataset.name);
+      if (item) renderDetail(item);
     });
-  }
+  });
+}
 
   function bindHomeEvents() {
     document.getElementById("homeButton").addEventListener("click", () => {
