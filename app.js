@@ -156,7 +156,7 @@
   <a href="#home">หน้าหลัก</a>
 
 
-  <a href="https://share.google/XoRmJSs847Jfq91BR"
+  <a href="https://maps.app.goo.gl/sVRwbfAZX14rP1Zf7?g_st=il"
      target="_blank"
      rel="noopener noreferrer">
     ติดต่อเรา
