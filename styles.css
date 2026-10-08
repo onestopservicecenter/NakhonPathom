@@ -565,18 +565,9 @@ img{max-width:100%}
   .service-image{
     max-width:190px;
   }
-}
 
-@media(max-width:430px){
-  .circle-grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:16px 10px;
-  }
+  
 
-  .service-image{
-    max-width:165px;
-  }
-}
 
   .directory-search{
     grid-template-columns:1fr 46px;
