@@ -478,8 +478,8 @@ img{max-width:100%}
 
 .circle-grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:28px 22px;
+  grid-template-columns:repeat(4,1fr);
+  gap:32px 28px;
   justify-items:center;
   align-items:start;
 }
@@ -496,7 +496,8 @@ img{max-width:100%}
 
 .service-image{
   width:100%;
-  max-width:220px;
+  max-width:250px;
+  
   height:auto;
   display:block;
   margin:0 auto;
@@ -551,19 +552,31 @@ img{max-width:100%}
   }
 
   .service-image{
-    max-width:210px;
+    max-width:220px;
   }
 }
 
 @media(max-width:720px){
   .circle-grid{
     grid-template-columns:repeat(2,1fr);
-    gap:20px 12px;
+    gap:20px 14px;
   }
 
   .service-image{
     max-width:190px;
   }
+}
+
+@media(max-width:430px){
+  .circle-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:16px 10px;
+  }
+
+  .service-image{
+    max-width:165px;
+  }
+}
 
   .directory-search{
     grid-template-columns:1fr 46px;
