@@ -22,9 +22,11 @@
 <body>
   <div id="root"></div>
 
-  <script
-    defer
-    src="./app.js"
-  ></script>
+<script>
+  const appScript = document.createElement("script");
+  appScript.src = "./app.js?v=" + Date.now();
+  document.body.appendChild(appScript);
+</script>
+  
 </body>
 </html>
