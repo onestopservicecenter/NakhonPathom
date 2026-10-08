@@ -248,11 +248,13 @@ function renderCards(items) {
       const item = serviceIcons.find(x => x.id === id);
 
       if (item?.url) {
-        window.location.href = item.url;
+        window.open(item.url, "_blank", "noopener");
       }
     });
   });
 }
+
+
 
 
 
