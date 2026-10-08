@@ -83,6 +83,11 @@
     }
   ];
 
+const serviceIcons = Array.from({ length: 28 }, (_, index) => ({
+  id: index + 1,
+  image: `./assets/icons/${index + 1}.png`
+}));
+  
   const sectionNames = [
     "การขออนุญาตและขึ้นทะเบียน",
     "แก้ไขเปลี่ยนแปลง โอน และเลิกกิจการ",
@@ -206,7 +211,7 @@
       </main>
     `;
 
-    renderCards(categories);
+    renderCards(serviceIcons);
     bindHomeEvents();
     startBannerTimer();
   }
@@ -214,29 +219,24 @@
  function renderCards(items) {
   const grid = document.getElementById("lawGrid");
 
-  grid.innerHTML = items.map((item, index) => `
+  grid.innerHTML = items.map(item => `
     <button
       class="circle-service"
       type="button"
-      data-name="${item.name}"
-      aria-label="${item.name}"
+      data-id="${item.id}"
+      aria-label="เมนู ${item.id}"
     >
       <img
-        src="./assets/icons/${index + 1}.png"
-        alt="${item.name}"
+        src="${item.image}"
+        alt="เมนู ${item.id}"
         class="service-image"
         loading="lazy"
       >
     </button>
   `).join("");
-
-  grid.querySelectorAll(".circle-service").forEach(card => {
-    card.addEventListener("click", () => {
-      const item = categories.find(c => c.name === card.dataset.name);
-      if (item) renderDetail(item);
-    });
-  });
 }
+
+
 
   function bindHomeEvents() {
     document.getElementById("homeButton").addEventListener("click", () => {
