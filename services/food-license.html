@@ -600,20 +600,17 @@ const grid = document.getElementById("topicGrid");
 const searchInput = document.getElementById("searchInput");
 
 function render(q=""){
-
   const text = q.trim().toLowerCase();
 
   const visible = topics.filter(t =>
-    (t[1] + " " + t[2])
-      .toLowerCase()
-      .includes(text)
+    t[1].toLowerCase().includes(text)
   );
 
   grid.innerHTML = visible.map(t => `
     <a
       class="topic-card"
       href="#"
-      style="--accent:${t[3]}"
+      style="--accent:${t[2]}"
     >
 
       <div class="topic-top">
@@ -622,17 +619,10 @@ function render(q=""){
 
       <h2>${t[1]}</h2>
 
-
-
       <div class="topic-action">
         <div class="topic-action-inner">
-
           <span>คลิ๊ก</span>
-
-          <span class="topic-arrow">
-            →
-          </span>
-
+          <span class="topic-arrow">→</span>
         </div>
       </div>
 
