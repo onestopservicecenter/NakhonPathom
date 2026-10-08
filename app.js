@@ -83,7 +83,7 @@
     }
   ];
 
-const serviceIcons = Array.from({ length: 28 }, (_, index) => {
+const serviceIcons = Array.from({ length: 27 }, (_, index) => {
   const id = index + 1;
 
   return {
