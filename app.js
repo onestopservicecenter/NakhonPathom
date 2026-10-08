@@ -83,10 +83,17 @@
     }
   ];
 
-const serviceIcons = Array.from({ length: 28 }, (_, index) => ({
-  id: index + 1,
-  image: `./assets/icons/${index + 1}.png`
-}));
+const serviceIcons = Array.from({ length: 28 }, (_, index) => {
+  const id = index + 1;
+
+  return {
+    id,
+    image: `./assets/icons/${id}.png`,
+    url: id === 22
+      ? "./services/food-license.html"
+      : ""
+  };
+});
   
   const sectionNames = [
     "การขออนุญาตและขึ้นทะเบียน",
@@ -216,7 +223,7 @@ const serviceIcons = Array.from({ length: 28 }, (_, index) => ({
     startBannerTimer();
   }
 
- function renderCards(items) {
+function renderCards(items) {
   const grid = document.getElementById("lawGrid");
 
   grid.innerHTML = items.map(item => `
@@ -234,6 +241,17 @@ const serviceIcons = Array.from({ length: 28 }, (_, index) => ({
       >
     </button>
   `).join("");
+
+  grid.querySelectorAll(".circle-service").forEach(card => {
+    card.addEventListener("click", () => {
+      const id = Number(card.dataset.id);
+      const item = serviceIcons.find(x => x.id === id);
+
+      if (item?.url) {
+        window.location.href = item.url;
+      }
+    });
+  });
 }
 
 
