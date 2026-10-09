@@ -511,12 +511,12 @@
 <script>
 
 const topics = [
-  [
-    "01",
-    "คู่มือสำหรับประชาชนด้านอาหาร",
-    
-    "#f8d8ef"
-  ],
+[
+  "01",
+  "คู่มือสำหรับประชาชนด้านอาหาร",
+  "#f8d8ef",
+  "./food-manual.html"
+],
 
   [
     "02",
@@ -609,7 +609,7 @@ function render(q=""){
   grid.innerHTML = visible.map(t => `
     <a
       class="topic-card"
-      href="#"
+      href="${t[3] || '#'}"
       style="--accent:${t[2]}"
     >
 
