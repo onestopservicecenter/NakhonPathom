@@ -23,14 +23,26 @@
     h1{margin:0;color:var(--deep);font-size:clamp(1.8rem,4vw,2.6rem)}
     .subtitle{margin-top:8px;color:var(--muted)}
     .content{padding:28px 0 60px}.status-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;color:var(--muted)}
-    .section-card{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:18px;overflow:hidden;box-shadow:0 8px 24px rgba(18,63,58,.05)}
-    .section-head{width:100%;border:0;background:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font:inherit;color:var(--deep);cursor:pointer}
-    .section-head strong{font-size:1.08rem}.section-body{display:none;padding:0 20px 20px}.section-card.open .section-body{display:block}
-    .topic{border-top:1px solid #edf2f1;padding:18px 0}.topic:first-child{border-top:0}.topic h3{margin:0 0 12px;color:#24534e;font-size:1rem}
-    .doc-list{display:grid;gap:10px}.doc{border:1px solid #e4ecea;border-radius:12px;padding:14px;background:#fbfdfc}
-    .doc-title{font-weight:700;line-height:1.5}.doc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:9px;background:#eef7f5;color:#087b71;font-size:.88rem;font-weight:700;border:1px solid #cee8e3}
-    .btn:hover{background:var(--teal);color:#fff}
+    .section-card{background:#fff;border:1px solid #d5e6df;border-radius:24px;margin-bottom:22px;overflow:hidden;box-shadow:0 10px 28px rgba(18,63,58,.06)}
+    .section-head{width:100%;border:0;background:#fff;padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;text-align:left;font:inherit;cursor:pointer}
+    .section-head strong{font-size:1.1rem;color:#0f5b4f;line-height:1.55;font-weight:800}
+    .section-toggle{width:40px;height:40px;border-radius:999px;border:1px solid #b9d8ce;background:#eef8f4;color:#0f5b4f;display:inline-flex;align-items:center;justify-content:center;flex:0 0 40px;transition:transform .2s ease,background .2s ease}
+    .section-toggle svg{width:18px;height:18px;transition:transform .22s ease}
+    .section-card.open .section-toggle svg{transform:rotate(180deg)}
+    .section-card.open .section-toggle{background:#dff2eb}
+    .section-body{display:none;padding:0 24px 24px}.section-card.open .section-body{display:block}
+    .topic{border-top:1px solid #edf3f1;padding:20px 0 0}.topic:first-child{border-top:0;padding-top:4px}
+    .topic h3{margin:0 0 16px;color:#0f5b4f;font-size:1.05rem;font-weight:800;line-height:1.55}
+    .doc-list{display:grid;gap:14px}
+    .doc{border:1px solid #dbe9e4;border-radius:18px;padding:17px 18px;background:#fbfdfc}
+    .doc-title{font-weight:800;line-height:1.55;color:#173f38;font-size:1rem}
+    .doc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+    .file-btn{display:inline-flex;align-items:center;gap:10px;padding:9px 14px 9px 10px;border-radius:13px;background:#f1faf7;color:#087b71;font-size:.9rem;font-weight:800;border:1px solid #bddfd4;transition:.18s ease}
+    .file-btn:hover{background:#0a8f84;color:#fff;transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,143,132,.18)}
+    .file-icon{width:34px;height:34px;border-radius:10px;background:#0a8f84;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px}
+    .file-btn:hover .file-icon{background:#08766d}
+    .file-icon svg{width:18px;height:18px;display:block}
+    .file-name-note{font-size:.83rem;color:#81918e;margin-top:3px}
     .simple-footer{border-top:1px solid var(--line);background:#fff}.simple-footer .container{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#66807c;font-size:.86rem}
     .visitor-stats{display:flex;gap:8px;flex-wrap:wrap}.visitor-stats span{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#f8fbfa}.visitor-stats strong{color:var(--deep)}
     @media(max-width:680px){.nav-links a:not(.staff-link){display:none}.simple-footer .container{justify-content:center;text-align:center;padding:12px 0}.visitor-stats{width:100%;justify-content:center}}
@@ -124,46 +136,101 @@ function fileLabel(file){
   if(type==="website")return "เว็บไซต์";
   return "เปิดไฟล์";
 }
+function stripFileExtension(name){
+  return String(name||"").replace(/\.[^/.]+$/,"").trim();
+}
+
+function pdfIcon(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M6 2h8l4 4v16H6z"></path>
+    <path d="M14 2v5h5"></path>
+    <path d="M9 13h6M9 17h6"></path>
+  </svg>`;
+}
+
+function chevronIcon(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="m6 9 6 6 6-6"></path>
+  </svg>`;
+}
+
+function renderFileItem(file,doc){
+  const fileName=String(file&&file.fileName||"").trim();
+  const displayTitle=stripFileExtension(fileName)||String(doc&&doc.title||"เอกสาร").trim();
+  const label=fileLabel(file);
+  const type=String(file&&file.fileType||"").toLowerCase();
+  const icon=type==="pdf"?pdfIcon():pdfIcon();
+
+  return `<article class="doc">
+    <div class="doc-title">${escapeHtml(displayTitle)}</div>
+    ${fileName&&displayTitle!==String(doc&&doc.title||"").trim()?'<div class="file-name-note">'+escapeHtml(fileName)+'</div>':""}
+    <div class="doc-actions">
+      <a class="file-btn" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">
+        <span class="file-icon">${icon}</span>
+        <span>${escapeHtml(label)}</span>
+      </a>
+    </div>
+  </article>`;
+}
+
 function renderCategory(category){
   document.title=category.categoryName+" | OSSC นครปฐม";
   document.getElementById("pageTitle").textContent=category.categoryName;
+
   const target=document.getElementById("serviceContent");
   const sections=Array.isArray(category.sections)?category.sections:[];
+
   if(!sections.length){
     target.className="status-box";
     target.textContent="ยังไม่มีข้อมูลที่เผยแพร่ในหมวดนี้";
     return;
   }
+
   target.className="";
+
   target.innerHTML=sections.map((section,index)=>{
     const topics=Array.isArray(section.topics)?section.topics:[];
+
     return `<section class="section-card ${index===0?"open":""}">
-      <button type="button" class="section-head">
-        <strong>${escapeHtml(section.sectionName)}</strong><span>⌄</span>
+      <button type="button" class="section-head" aria-expanded="${index===0?"true":"false"}">
+        <strong>${escapeHtml(section.sectionName)}</strong>
+        <span class="section-toggle">${chevronIcon()}</span>
       </button>
+
       <div class="section-body">
         ${topics.length?topics.map(topic=>{
           const docs=Array.isArray(topic.documents)?topic.documents:[];
+
+          const fileCards=[];
+          docs.forEach(doc=>{
+            const files=Array.isArray(doc.files)?doc.files:[];
+            if(files.length){
+              files.forEach(file=>fileCards.push(renderFileItem(file,doc)));
+            }else{
+              fileCards.push(`<article class="doc">
+                <div class="doc-title">${escapeHtml(doc.title)}</div>
+                <div class="file-name-note">ยังไม่มีไฟล์แนบ</div>
+              </article>`);
+            }
+          });
+
           return `<div class="topic">
             <h3>${escapeHtml(topic.topicName)}</h3>
             <div class="doc-list">
-              ${docs.length?docs.map(doc=>{
-                const files=Array.isArray(doc.files)?doc.files:[];
-                return `<article class="doc">
-                  <div class="doc-title">${escapeHtml(doc.title)}</div>
-                  <div class="doc-actions">
-                    ${files.length?files.map(file=>`<a class="btn" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(fileLabel(file))}</a>`).join(""):'<span style="color:#81918e;font-size:.86rem">ยังไม่มีไฟล์แนบ</span>'}
-                  </div>
-                </article>`;
-              }).join(""):'<div style="color:#81918e">ยังไม่มีเอกสารที่เผยแพร่</div>'}
+              ${fileCards.length?fileCards.join(""):'<div style="color:#81918e">ยังไม่มีเอกสารที่เผยแพร่</div>'}
             </div>
           </div>`;
         }).join(""):'<div style="padding:16px 0;color:#81918e">ยังไม่มีหัวข้อย่อยที่เผยแพร่</div>'}
       </div>
     </section>`;
   }).join("");
+
   document.querySelectorAll(".section-head").forEach(btn=>{
-    btn.addEventListener("click",()=>btn.closest(".section-card").classList.toggle("open"));
+    btn.addEventListener("click",()=>{
+      const card=btn.closest(".section-card");
+      const isOpen=card.classList.toggle("open");
+      btn.setAttribute("aria-expanded",isOpen?"true":"false");
+    });
   });
 }
 async function loadData(){
