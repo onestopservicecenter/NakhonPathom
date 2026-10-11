@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>สถิติการเข้าชมเว็บไซต์ | OSSC นครปฐม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--deep:#083f3b;--teal:#0a8f84;--paper:#f5f9f8;--line:#d9e7e3;--muted:#6f817d}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);font-family:"Sarabun",Tahoma,sans-serif;color:#173e3a}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1180px,calc(100% - 32px));margin:auto}
+    .main-header{background:#fff;border-bottom:1px solid var(--line)}
+    .nav-wrap{min-height:96px;display:flex;align-items:center;gap:18px}
+    .brand{margin-right:auto}.site-logo{width:min(420px,64vw);display:block}
+    .nav-links{display:flex;gap:8px;align-items:center}.nav-links a{padding:10px 14px;border-radius:10px;font-weight:700;color:#315b57}
+    .staff-link{background:var(--deep)!important;color:#fff!important}
+    .hero{background:linear-gradient(135deg,#eaf8f4,#fff);border-bottom:1px solid var(--line)}
+    .hero .container{padding:28px 0}
+    .crumb{color:#7a8d89;font-size:.9rem;margin-bottom:8px}
+    h1{margin:0;color:var(--deep);font-size:clamp(1.8rem,4vw,2.5rem)}
+    .subtitle{margin-top:6px;color:var(--muted)}
+    main{padding:28px 0 50px}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .summary-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 7px 22px rgba(20,76,67,.05)}
+    .summary-card span{display:block;color:#71837f;font-size:.86rem}
+    .summary-card strong{display:block;margin-top:5px;color:#0b5a4f;font-size:1.65rem}
+    .summary-card small{color:#8a9996}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 7px 22px rgba(20,76,67,.05)}
+    .panel-head{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .panel-head h2{margin:0;color:#0b5a4f;font-size:1.08rem}
+    .tabs{display:flex;gap:8px}
+    .tab{border:1px solid #cfe1dc;background:#f5faf8;color:#4d6e68;padding:8px 12px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+    .tab.active{background:#0a8f84;color:#fff;border-color:#0a8f84}
+    .table-wrap{overflow:auto}
+    table{width:100%;border-collapse:collapse;min-width:720px}
+    th,td{padding:13px 16px;text-align:left;border-bottom:1px solid #edf2f0}
+    th{background:#f4f8f7;color:#4a6863;font-size:.88rem}
+    tr:last-child td{border-bottom:0}
+    td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;color:#0b5a4f}
+    .status{padding:24px;text-align:center;color:#71837f}
+    .simple-footer{border-top:1px solid #d8e7e2;background:#f7fbf9}
+    .footer-layout{padding:18px 0;display:grid;grid-template-columns:1.4fr .9fr .8fr;gap:26px;align-items:center}
+    .footer-brand strong,.footer-brand span{display:block}.footer-brand strong{color:#0b5a4f}.footer-brand span{margin-top:3px;color:#4f6c67}
+    .footer-phone{padding-left:16px;border-left:1px solid #d7e6e1}.footer-phone span,.footer-phone strong{display:block}
+    .footer-email{text-align:right;color:#0b7f72;font-weight:700}
+    @media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}.footer-layout{grid-template-columns:1fr}.footer-phone{padding-left:0;border-left:0}.footer-email{text-align:left}}
+    @media(max-width:640px){.nav-links a:not(.staff-link){display:none}.summary-grid{grid-template-columns:1fr 1fr}.summary-card{padding:14px}.container{width:min(100% - 22px,1180px)}}
+  </style>
+</head>
+<body>
+<header class="main-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="../"><img src="../assets/LogoOSSC.png" class="site-logo" alt="OSSC นครปฐม"></a>
+    <nav class="nav-links">
+      <a href="../">หน้าหลัก</a>
+      <a href="../staff/" target="_blank" rel="noopener noreferrer" class="staff-link">สำหรับเจ้าหน้าที่</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="crumb"><a href="../">หน้าหลัก</a> › สถิติการเข้าชมเว็บไซต์</div>
+    <h1>สถิติผู้เข้าชมเว็บไซต์</h1>
+    <div class="subtitle">สรุปการเข้าชมเว็บไซต์ OSSC นครปฐม ทั้งรายวันและรายเดือน</div>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+    <section class="summary-grid">
+      <div class="summary-card"><span>วันนี้</span><strong id="todayUsers">—</strong><small>ผู้เข้าชม</small></div>
+      <div class="summary-card"><span>เมื่อวาน</span><strong id="yesterdayUsers">—</strong><small>ผู้เข้าชม</small></div>
+      <div class="summary-card"><span>เดือนนี้</span><strong id="thisMonthUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
+      <div class="summary-card"><span>เดือนก่อน</span><strong id="lastMonthUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>สถิติย้อนหลัง</h2>
+        <div class="tabs">
+          <button class="tab active" data-tab="daily" type="button">รายวัน</button>
+          <button class="tab" data-tab="monthly" type="button">รายเดือน</button>
+        </div>
+      </div>
+      <div id="statsContent" class="status">กำลังโหลดข้อมูล...</div>
+    </section>
+  </div>
+</main>
+
+<footer class="simple-footer">
+  <div class="container footer-layout">
+    <div class="footer-brand">
+      <strong>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ</strong>
+      <span>(ONE STOP SERVICE CENTER) สำนักงานสาธารณสุขจังหวัดนครปฐม</span>
+    </div>
+    <div class="footer-phone">
+      <span>โทรศัพท์</span>
+      <strong>0 3424 3620 - 22</strong>
+      <strong>0 3427 0349 ต่อ 124 หรือ 230</strong>
+    </div>
+    <a class="footer-email" href="mailto:fdapv73@fda.moph.go.th">fdapv73@fda.moph.go.th</a>
+  </div>
+</footer>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycbxfALaEJFu1IowoXy-83JoZiJqzQ9rIIhTp_HzYJJSrBpHU2Ms0lyjSQjFTdC6Qb9LN/exec";
+let statsData=null;
+let currentTab="daily";
+
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb="__stats_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const script=document.createElement("script");
+    const clean=()=>{try{delete window[cb]}catch(_){window[cb]=undefined}script.remove()};
+    const timer=setTimeout(()=>{clean();reject(new Error("timeout"))},12000);
+    window[cb]=data=>{clearTimeout(timer);clean();resolve(data)};
+    script.onerror=()=>{clearTimeout(timer);clean();reject(new Error("network"))};
+    script.src=url+(url.includes("?")?"&":"?")+"callback="+encodeURIComponent(cb)+"&_="+Date.now();
+    document.head.appendChild(script);
+  });
+}
+
+function fmt(n){return Number(n||0).toLocaleString("th-TH")}
+
+function render(){
+  if(!statsData)return;
+  const rows=currentTab==="daily"?(statsData.daily||[]):(statsData.monthly||[]);
+  const label=currentTab==="daily"?"วันที่":"เดือน";
+  const html=`<div class="table-wrap"><table>
+    <thead><tr><th>${label}</th><th style="text-align:right">ผู้เข้าชม</th><th style="text-align:right">เปิดดู</th></tr></thead>
+    <tbody>${rows.map(r=>`<tr><td>${r.label}</td><td class="num">${fmt(r.users)}</td><td class="num">${fmt(r.pageViews)}</td></tr>`).join("")}</tbody>
+  </table></div>`;
+  document.getElementById("statsContent").className="";
+  document.getElementById("statsContent").innerHTML=html;
+}
+
+async function load(){
+  try{
+    const result=await jsonp(API+"?mode=stats-history");
+    if(!result||!result.success||!result.stats)throw new Error("invalid");
+    statsData=result.stats;
+    document.getElementById("todayUsers").textContent=fmt(statsData.summary.today.users);
+    document.getElementById("yesterdayUsers").textContent=fmt(statsData.summary.yesterday.users);
+    document.getElementById("thisMonthUsers").textContent=fmt(statsData.summary.thisMonth.users);
+    document.getElementById("lastMonthUsers").textContent=fmt(statsData.summary.lastMonth.users);
+    render();
+  }catch(e){
+    console.error(e);
+    const box=document.getElementById("statsContent");
+    box.className="status";
+    box.textContent="ยังไม่สามารถโหลดสถิติย้อนหลังได้ กรุณาลองใหม่หลัง Deploy Apps Script เวอร์ชันล่าสุด";
+  }
+}
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  currentTab=btn.dataset.tab;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===btn));
+  render();
+}));
+load();
+</script>
+</body>
+</html>
