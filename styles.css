@@ -710,3 +710,31 @@ img{max-width:100%}
     width:100%;
   }
 }
+
+
+.footer-contact{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  color:#58736f;
+  line-height:1.55;
+}
+.footer-contact strong{
+  color:#174f48;
+  font-weight:800;
+}
+.footer-contact a{
+  color:#0b7f72;
+  text-decoration:none;
+  font-weight:700;
+}
+.footer-contact a:hover{
+  text-decoration:underline;
+}
+@media(max-width:700px){
+  .footer-contact{
+    width:100%;
+    align-items:center;
+    text-align:center;
+  }
+}
