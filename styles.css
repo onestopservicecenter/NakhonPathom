@@ -952,3 +952,53 @@ img{max-width:100%}
     padding:0 14px;
   }
 }
+
+
+/* ===== Compact standalone visitor statistics ===== */
+.visitor-strip{
+  background:transparent !important;
+  border-top:0 !important;
+  padding:20px 0 18px !important;
+}
+.visitor-strip .container{
+  display:flex !important;
+  justify-content:flex-start !important;
+}
+.visitor-panel{
+  width:min(560px,100%);
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 14px;
+  border:1px solid #cfe3dc;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 7px 20px rgba(20,76,67,.07);
+}
+.visitor-panel-title{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.visitor-history-link{
+  margin-left:4px;
+  color:#0a7f72;
+  font-size:.76rem;
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:1px dotted #0a7f72;
+}
+.visitor-history-link:hover{
+  color:#075f56;
+}
+@media(max-width:700px){
+  .visitor-strip .container{
+    justify-content:center !important;
+  }
+  .visitor-panel{
+    width:100%;
+  }
+}
