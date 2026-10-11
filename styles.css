@@ -1002,3 +1002,20 @@ img{max-width:100%}
     width:100%;
   }
 }
+
+
+/* ===== Align visitor statistics card to left ===== */
+.visitor-strip .container{
+  justify-content:flex-start !important;
+  margin-left:auto;
+  margin-right:auto;
+}
+.visitor-panel{
+  margin-left:0 !important;
+  margin-right:auto !important;
+}
+@media(min-width:701px){
+  .visitor-strip .container{
+    padding-left:0 !important;
+  }
+}
