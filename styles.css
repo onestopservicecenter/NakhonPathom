@@ -1019,3 +1019,26 @@ img{max-width:100%}
     padding-left:0 !important;
   }
 }
+
+
+/* ===== Pin visitor statistics to real left edge ===== */
+.visitor-strip{
+  width:100% !important;
+}
+.visitor-strip .container{
+  width:100% !important;
+  max-width:none !important;
+  margin:0 !important;
+  padding-left:24px !important;
+  padding-right:24px !important;
+  justify-content:flex-start !important;
+}
+.visitor-panel{
+  margin:0 !important;
+}
+@media(max-width:700px){
+  .visitor-strip .container{
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+}
