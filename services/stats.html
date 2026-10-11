@@ -24,7 +24,7 @@
     h1{margin:0;color:var(--deep);font-size:clamp(1.8rem,4vw,2.5rem)}
     .subtitle{margin-top:6px;color:var(--muted)}
     main{padding:28px 0 50px}
-    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .summary-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
     .summary-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 7px 22px rgba(20,76,67,.05)}
     .summary-card span{display:block;color:#71837f;font-size:.86rem}
     .summary-card strong{display:block;margin-top:5px;color:#0b5a4f;font-size:1.65rem}
@@ -47,6 +47,7 @@
     .footer-brand strong,.footer-brand span{display:block}.footer-brand strong{color:#0b5a4f}.footer-brand span{margin-top:3px;color:#4f6c67}
     .footer-phone{padding-left:16px;border-left:1px solid #d7e6e1}.footer-phone span,.footer-phone strong{display:block}
     .footer-email{text-align:right;color:#0b7f72;font-weight:700}
+    @media(max-width:1050px){.summary-grid{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:900px){.summary-grid{grid-template-columns:repeat(2,1fr)}.footer-layout{grid-template-columns:1fr}.footer-phone{padding-left:0;border-left:0}.footer-email{text-align:left}}
     @media(max-width:640px){.nav-links a:not(.staff-link){display:none}.summary-grid{grid-template-columns:1fr 1fr}.summary-card{padding:14px}.container{width:min(100% - 22px,1180px)}}
   </style>
@@ -77,6 +78,8 @@
       <div class="summary-card"><span>เมื่อวาน</span><strong id="yesterdayUsers">—</strong><small>ผู้เข้าชม</small></div>
       <div class="summary-card"><span>เดือนนี้</span><strong id="thisMonthUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
       <div class="summary-card"><span>เดือนก่อน</span><strong id="lastMonthUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
+      <div class="summary-card"><span>ปีนี้</span><strong id="thisYearUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
+      <div class="summary-card"><span>ปีก่อน</span><strong id="lastYearUsers">—</strong><small>ผู้เข้าชมไม่ซ้ำ</small></div>
     </section>
 
     <section class="panel">
@@ -148,6 +151,8 @@ async function load(){
     document.getElementById("yesterdayUsers").textContent=fmt(statsData.summary.yesterday.users);
     document.getElementById("thisMonthUsers").textContent=fmt(statsData.summary.thisMonth.users);
     document.getElementById("lastMonthUsers").textContent=fmt(statsData.summary.lastMonth.users);
+    document.getElementById("thisYearUsers").textContent=fmt(statsData.summary.thisYear.users);
+    document.getElementById("lastYearUsers").textContent=fmt(statsData.summary.lastYear.users);
     render();
   }catch(e){
     console.error(e);
