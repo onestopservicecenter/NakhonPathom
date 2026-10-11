@@ -51,8 +51,11 @@
     .file-icon svg{width:18px;height:18px;display:block}
     .file-name-note{font-size:.83rem;color:#81918e;margin-top:3px}
 
-    .visitor-strip{background:#f7fbf9;border-top:1px solid #d8e7e2;padding:14px 0 12px}
+    .visitor-strip{background:transparent;border-top:0;padding:20px 0 18px}
     .visitor-strip .container{display:flex;justify-content:flex-start}
+    .visitor-panel{width:min(560px,100%);min-height:76px}
+    .visitor-history-link{margin-left:4px;color:#0a7f72;font-size:.76rem;font-weight:700;text-decoration:none;border-bottom:1px dotted #0a7f72}
+    .visitor-history-link:hover{color:#075f56}
     .simple-footer{border-top:1px solid #d8e7e2;background:linear-gradient(180deg,#fbfdfc 0%,#f4faf7 100%)}
     .simple-footer .footer-layout{display:block;padding:22px 0 18px}
     .footer-top{display:grid;grid-template-columns:minmax(340px,1.5fr) minmax(260px,.9fr) minmax(250px,.8fr);gap:28px;align-items:center}
@@ -111,6 +114,7 @@
       <div class="visitor-panel-title">
         <span class="visitor-dot">●</span>
         <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
+        <a class="visitor-history-link" href="./stats.html">ดูสถิติย้อนหลัง</a>
       </div>
 
       <div class="visitor-metrics">
