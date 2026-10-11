@@ -278,7 +278,7 @@ const serviceLinks = {
   24: "", // เตือนภัย
   25: "", // คุณธรรมและความโปร่งใส ITA
   26: "", // Fda73-Tracking
-  27: ""  // สำหรับเจ้าหน้าที่
+  27: "./staff/"  // สำหรับเจ้าหน้าที่
 };
 
 const serviceIcons = Array.from({ length: 27 }, (_, index) => {
