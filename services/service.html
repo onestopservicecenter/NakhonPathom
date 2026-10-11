@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ศูนย์บริการ | OSSC นครปฐม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--deep:#083f3b;--teal:#0a8f84;--paper:#f6f9f8;--text:#173e3a;--muted:#71837f;--line:#dce8e5}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--text);font-family:"Sarabun",Tahoma,sans-serif}
+    a{text-decoration:none;color:inherit}
+    .container{width:min(1200px,calc(100% - 32px));margin:auto}
+    .main-header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+    .nav-wrap{min-height:90px;display:flex;align-items:center;gap:20px}
+    .brand{margin-right:auto}.site-logo{width:min(420px,64vw);display:block}
+    .nav-links{display:flex;gap:8px;align-items:center}.nav-links a{padding:10px 14px;border-radius:10px;font-weight:700;color:#315b57}
+    .staff-link{background:var(--deep)!important;color:#fff!important}
+    .hero{background:linear-gradient(135deg,#e9f8f4,#fff);border-bottom:1px solid var(--line)}
+    .hero .container{padding:34px 0}.crumb{color:#7a8d89;font-size:.9rem;margin-bottom:10px}
+    h1{margin:0;color:var(--deep);font-size:clamp(1.8rem,4vw,2.6rem)}
+    .subtitle{margin-top:8px;color:var(--muted)}
+    .content{padding:28px 0 60px}.status-box{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;color:var(--muted)}
+    .section-card{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:18px;overflow:hidden;box-shadow:0 8px 24px rgba(18,63,58,.05)}
+    .section-head{width:100%;border:0;background:#fff;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font:inherit;color:var(--deep);cursor:pointer}
+    .section-head strong{font-size:1.08rem}.section-body{display:none;padding:0 20px 20px}.section-card.open .section-body{display:block}
+    .topic{border-top:1px solid #edf2f1;padding:18px 0}.topic:first-child{border-top:0}.topic h3{margin:0 0 12px;color:#24534e;font-size:1rem}
+    .doc-list{display:grid;gap:10px}.doc{border:1px solid #e4ecea;border-radius:12px;padding:14px;background:#fbfdfc}
+    .doc-title{font-weight:700;line-height:1.5}.doc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border-radius:9px;background:#eef7f5;color:#087b71;font-size:.88rem;font-weight:700;border:1px solid #cee8e3}
+    .btn:hover{background:var(--teal);color:#fff}
+    .simple-footer{border-top:1px solid var(--line);background:#fff}.simple-footer .container{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#66807c;font-size:.86rem}
+    .visitor-stats{display:flex;gap:8px;flex-wrap:wrap}.visitor-stats span{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#f8fbfa}.visitor-stats strong{color:var(--deep)}
+    @media(max-width:680px){.nav-links a:not(.staff-link){display:none}.simple-footer .container{justify-content:center;text-align:center;padding:12px 0}.visitor-stats{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+<header class="main-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="../"><img src="../assets/LogoOSSC.png" class="site-logo" alt="OSSC นครปฐม"></a>
+    <nav class="nav-links">
+      <a href="../">หน้าหลัก</a>
+      <a href="https://maps.app.goo.gl/sVRwbfAZX14rP1Zf7?g_st=il" target="_blank" rel="noopener">ติดต่อเรา</a>
+      <a class="staff-link" href="../staff/" target="_blank" rel="noopener">สำหรับเจ้าหน้าที่</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="crumb"><a href="../">หน้าหลัก</a> › ศูนย์บริการ</div>
+    <h1 id="pageTitle">กำลังโหลดข้อมูล...</h1>
+    <div class="subtitle">ข้อมูลและเอกสารจากระบบ OSSC สำนักงานสาธารณสุขจังหวัดนครปฐม</div>
+  </div>
+</section>
+
+<main class="content">
+  <div class="container">
+    <div id="serviceContent" class="status-box">กำลังเชื่อมต่อข้อมูล...</div>
+  </div>
+</main>
+
+<footer class="simple-footer">
+  <div class="container">
+    <span>สำนักงานสาธารณสุขจังหวัดนครปฐม</span>
+    <div class="visitor-stats" aria-live="polite">
+      <span>ผู้เข้าชมวันนี้ <strong id="todayVisitors">—</strong> คน</span>
+      <span>เปิดดูวันนี้ <strong id="todayPageViews">—</strong> ครั้ง</span>
+    </div>
+    <a href="https://fda73.moph.go.th">fda73.moph.go.th</a>
+  </div>
+</footer>
+
+<script>
+const PUBLIC_API_URL="https://script.google.com/macros/s/AKfycbxfALaEJFu1IowoXy-83JoZiJqzQ9rIIhTp_HzYJJSrBpHU2Ms0lyjSQjFTdC6Qb9LN/exec";
+
+function escapeHtml(value){
+  const div=document.createElement("div");
+  div.textContent=String(value==null?"":value);
+  return div.innerHTML;
+}
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb="__ossc73_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+    const script=document.createElement("script");
+    const cleanup=()=>{try{delete window[cb]}catch(_){window[cb]=undefined}script.remove()};
+    const timer=setTimeout(()=>{cleanup();reject(new Error("timeout"))},12000);
+    window[cb]=data=>{clearTimeout(timer);cleanup();resolve(data)};
+    script.onerror=()=>{clearTimeout(timer);cleanup();reject(new Error("network"))};
+    script.src=url+(url.includes("?")?"&":"?")+"callback="+encodeURIComponent(cb)+"&_="+Date.now();
+    document.head.appendChild(script);
+  });
+}
+function getVisitorId(){
+  const key="OSSC73_VISITOR_ID";
+  let id=localStorage.getItem(key);
+  if(!id){
+    id=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():"v-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+    localStorage.setItem(key,id);
+  }
+  return id;
+}
+async function trackVisit(){
+  try{
+    const result=await jsonp(
+      PUBLIC_API_URL+"?mode=visit&visitorId="+encodeURIComponent(getVisitorId())+
+      "&page="+encodeURIComponent(location.pathname+location.search)
+    );
+    if(result&&result.success&&result.stats){
+      document.getElementById("todayVisitors").textContent=Number(result.stats.todayUsers||0).toLocaleString("th-TH");
+      document.getElementById("todayPageViews").textContent=Number(result.stats.todayPageViews||0).toLocaleString("th-TH");
+    }
+  }catch(e){console.warn("stats unavailable",e)}
+}
+function fileLabel(file){
+  if(file.buttonLabel)return file.buttonLabel;
+  const type=String(file.fileType||"").toLowerCase();
+  if(type==="pdf")return "PDF";
+  if(type==="word")return "Word";
+  if(type==="youtube")return "YouTube";
+  if(type==="video")return "วิดีโอ";
+  if(type==="website")return "เว็บไซต์";
+  return "เปิดไฟล์";
+}
+function renderCategory(category){
+  document.title=category.categoryName+" | OSSC นครปฐม";
+  document.getElementById("pageTitle").textContent=category.categoryName;
+  const target=document.getElementById("serviceContent");
+  const sections=Array.isArray(category.sections)?category.sections:[];
+  if(!sections.length){
+    target.className="status-box";
+    target.textContent="ยังไม่มีข้อมูลที่เผยแพร่ในหมวดนี้";
+    return;
+  }
+  target.className="";
+  target.innerHTML=sections.map((section,index)=>{
+    const topics=Array.isArray(section.topics)?section.topics:[];
+    return `<section class="section-card ${index===0?"open":""}">
+      <button type="button" class="section-head">
+        <strong>${escapeHtml(section.sectionName)}</strong><span>⌄</span>
+      </button>
+      <div class="section-body">
+        ${topics.length?topics.map(topic=>{
+          const docs=Array.isArray(topic.documents)?topic.documents:[];
+          return `<div class="topic">
+            <h3>${escapeHtml(topic.topicName)}</h3>
+            <div class="doc-list">
+              ${docs.length?docs.map(doc=>{
+                const files=Array.isArray(doc.files)?doc.files:[];
+                return `<article class="doc">
+                  <div class="doc-title">${escapeHtml(doc.title)}</div>
+                  <div class="doc-actions">
+                    ${files.length?files.map(file=>`<a class="btn" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(fileLabel(file))}</a>`).join(""):'<span style="color:#81918e;font-size:.86rem">ยังไม่มีไฟล์แนบ</span>'}
+                  </div>
+                </article>`;
+              }).join(""):'<div style="color:#81918e">ยังไม่มีเอกสารที่เผยแพร่</div>'}
+            </div>
+          </div>`;
+        }).join(""):'<div style="padding:16px 0;color:#81918e">ยังไม่มีหัวข้อย่อยที่เผยแพร่</div>'}
+      </div>
+    </section>`;
+  }).join("");
+  document.querySelectorAll(".section-head").forEach(btn=>{
+    btn.addEventListener("click",()=>btn.closest(".section-card").classList.toggle("open"));
+  });
+}
+async function loadData(){
+  const target=document.getElementById("serviceContent");
+  const categoryName=new URLSearchParams(location.search).get("category")||"";
+  try{
+    const result=await jsonp(PUBLIC_API_URL+"?mode=public-data");
+    if(!result||!result.success||!result.data)throw new Error("invalid");
+    const categories=Array.isArray(result.data.categories)?result.data.categories:[];
+    const category=categories.find(item=>String(item.categoryName||"").trim()===categoryName.trim());
+    if(!category){
+      document.getElementById("pageTitle").textContent=categoryName||"ศูนย์บริการ";
+      target.textContent="ยังไม่พบข้อมูลที่เผยแพร่สำหรับหมวดนี้";
+      return;
+    }
+    renderCategory(category);
+  }catch(error){
+    console.error(error);
+    target.textContent="ไม่สามารถเชื่อมต่อข้อมูลได้ กรุณาลองใหม่อีกครั้ง";
+  }
+}
+trackVisit();
+loadData();
+</script>
+</body>
+</html>
