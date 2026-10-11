@@ -673,3 +673,40 @@ img{max-width:100%}
     width:235px !important;
   }
 }
+
+
+/* Visitor statistics */
+.visitor-stats{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  color:#55736e;
+  font-size:.84rem;
+}
+.visitor-stats span{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:6px 10px;
+  border:1px solid #dce9e6;
+  border-radius:999px;
+  background:#fff;
+}
+.visitor-stats strong{
+  color:#083f3b;
+  font-weight:800;
+}
+@media(max-width:700px){
+  .simple-footer .container{
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:12px 0;
+    gap:10px;
+    text-align:center;
+  }
+  .visitor-stats{
+    width:100%;
+  }
+}
