@@ -738,3 +738,21 @@ img{max-width:100%}
     text-align:center;
   }
 }
+
+
+.footer-email{
+  color:#0b7f72;
+  text-decoration:none;
+  font-weight:700;
+  white-space:nowrap;
+}
+.footer-email:hover{
+  text-decoration:underline;
+}
+@media(max-width:700px){
+  .footer-email{
+    width:100%;
+    text-align:center;
+    white-space:normal;
+  }
+}
