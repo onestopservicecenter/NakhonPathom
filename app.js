@@ -2,7 +2,8 @@
   "use strict";
 
   const ROOT = document.getElementById("root");
-  const CENTRAL_DRIVE = "https://drive.google.com/drive/folders/1dtzmMhlP1dCgt7fLgFgCQcs6MEsNOHzo";\n  const PUBLIC_API_URL = "https://script.google.com/macros/s/AKfycbxfALaEJFu1IowoXy-83JoZiJqzQ9rIIhTp_HzYJJSrBpHU2Ms0lyjSQjFTdC6Qb9LN/exec";
+  const CENTRAL_DRIVE = "https://drive.google.com/drive/folders/1dtzmMhlP1dCgt7fLgFgCQcs6MEsNOHzo";
+  const PUBLIC_API_URL = "https://script.google.com/macros/s/AKfycbxfALaEJFu1IowoXy-83JoZiJqzQ9rIIhTp_HzYJJSrBpHU2Ms0lyjSQjFTdC6Qb9LN/exec";
 
   const banners = [
     "./assets/banners/consumer-protection.gif",
@@ -215,6 +216,7 @@
     renderCards(serviceIcons);
     bindHomeEvents();
     startBannerTimer();
+    trackAndRenderVisitorStats();
   }
 
 function renderCards(items) {
