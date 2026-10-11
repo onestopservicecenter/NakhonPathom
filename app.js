@@ -201,16 +201,47 @@
         </section>
 
         <div class="simple-footer">
-          <div class="container">
-            <div class="footer-contact">
-              <strong>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ สำนักงานสาธารณสุขจังหวัดนครปฐม</strong>
-              <span><b>โทร.</b> 0 3424 3620 - 22 , 0 3427 0349 ต่อ 124 หรือ 230</span>
+          <div class="container footer-layout">
+            <div class="footer-top">
+              <div class="footer-brand-block">
+                <strong>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ</strong>
+                <span>(ONE STOP SERVICE CENTER) สำนักงานสาธารณสุขจังหวัดนครปฐม</span>
+              </div>
+
+              <div class="footer-phone">
+                <span class="footer-label">โทรศัพท์</span>
+                <strong>0 3424 3620 - 22</strong>
+                <strong>0 3427 0349 ต่อ 124 หรือ 230</strong>
+              </div>
+
+              <a class="footer-email" href="mailto:fdapv73@fda.moph.go.th">
+                <span class="footer-label">e-mail</span>
+                <strong>fdapv73@fda.moph.go.th</strong>
+              </a>
             </div>
-            <div class="visitor-stats" id="visitorStats" aria-live="polite">
-              <span>ผู้เข้าชมวันนี้ <strong id="todayVisitors">—</strong> คน</span>
-              <span>เปิดดูวันนี้ <strong id="todayPageViews">—</strong> ครั้ง</span>
+
+            <div class="footer-bottom">
+              <div class="visitor-panel" id="visitorStats" aria-live="polite">
+                <div class="visitor-panel-title">
+                  <span class="visitor-dot">●</span>
+                  <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
+                </div>
+
+                <div class="visitor-metrics">
+                  <div class="visitor-metric">
+                    <span>ผู้เข้าชมวันนี้</span>
+                    <strong id="todayVisitors">—</strong>
+                    <small>คน</small>
+                  </div>
+
+                  <div class="visitor-metric">
+                    <span>เปิดดูวันนี้</span>
+                    <strong id="todayPageViews">—</strong>
+                    <small>ครั้ง</small>
+                  </div>
+                </div>
+              </div>
             </div>
-            <a class="footer-email" href="mailto:fdapv73@fda.moph.go.th"><b>e-mail:</b> fdapv73@fda.moph.go.th</a>
           </div>
         </div>
       </main>
