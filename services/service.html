@@ -31,8 +31,15 @@
     .section-card.open .section-toggle svg{transform:rotate(180deg)}
     .section-card.open .section-toggle{background:#dff2eb}
     .section-body{display:none;padding:0 24px 24px}.section-card.open .section-body{display:block}
-    .topic{border-top:1px solid #edf3f1;padding:20px 0 0}.topic:first-child{border-top:0;padding-top:4px}
-    .topic h3{margin:0 0 16px;color:#0f5b4f;font-size:1.05rem;font-weight:800;line-height:1.55}
+    .topic{border-top:1px solid #edf3f1;padding:14px 0 0}.topic:first-child{border-top:0;padding-top:4px}
+    .topic-head{width:100%;border:0;background:transparent;padding:8px 0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;font:inherit;cursor:pointer}
+    .topic-head strong{color:#0f5b4f;font-size:1.05rem;font-weight:800;line-height:1.55}
+    .topic-toggle{width:34px;height:34px;border-radius:999px;border:1px solid #b9d8ce;background:#eef8f4;color:#0f5b4f;display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;transition:transform .2s ease,background .2s ease}
+    .topic-toggle svg{width:16px;height:16px;transition:transform .22s ease}
+    .topic.open .topic-toggle svg{transform:rotate(180deg)}
+    .topic.open .topic-toggle{background:#dff2eb}
+    .topic-body{display:none;padding-bottom:8px}
+    .topic.open .topic-body{display:block}
     .doc-list{display:grid;gap:14px}
     .doc{border:1px solid #dbe9e4;border-radius:18px;padding:17px 18px;background:#fbfdfc}
     .doc-title{font-weight:800;line-height:1.55;color:#173f38;font-size:1rem}
@@ -198,7 +205,7 @@ function renderCategory(category){
       </button>
 
       <div class="section-body">
-        ${topics.length?topics.map(topic=>{
+        ${topics.length?topics.map((topic,topicIndex)=>{
           const docs=Array.isArray(topic.documents)?topic.documents:[];
 
           const fileCards=[];
@@ -214,10 +221,15 @@ function renderCategory(category){
             }
           });
 
-          return `<div class="topic">
-            <h3>${escapeHtml(topic.topicName)}</h3>
-            <div class="doc-list">
-              ${fileCards.length?fileCards.join(""):'<div style="color:#81918e">ยังไม่มีเอกสารที่เผยแพร่</div>'}
+          return `<div class="topic ${topicIndex===0?"open":""}">
+            <button type="button" class="topic-head" aria-expanded="${topicIndex===0?"true":"false"}">
+              <strong>${escapeHtml(topic.topicName)}</strong>
+              <span class="topic-toggle">${chevronIcon()}</span>
+            </button>
+            <div class="topic-body">
+              <div class="doc-list">
+                ${fileCards.length?fileCards.join(""):'<div style="color:#81918e">ยังไม่มีเอกสารที่เผยแพร่</div>'}
+              </div>
             </div>
           </div>`;
         }).join(""):'<div style="padding:16px 0;color:#81918e">ยังไม่มีหัวข้อย่อยที่เผยแพร่</div>'}
@@ -229,6 +241,14 @@ function renderCategory(category){
     btn.addEventListener("click",()=>{
       const card=btn.closest(".section-card");
       const isOpen=card.classList.toggle("open");
+      btn.setAttribute("aria-expanded",isOpen?"true":"false");
+    });
+  });
+
+  document.querySelectorAll(".topic-head").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const topic=btn.closest(".topic");
+      const isOpen=topic.classList.toggle("open");
       btn.setAttribute("aria-expanded",isOpen?"true":"false");
     });
   });
