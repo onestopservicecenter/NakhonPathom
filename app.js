@@ -202,7 +202,11 @@
 
         <div class="simple-footer">
           <div class="container">
-            <span>สำนักงานสาธารณสุขจังหวัดนครปฐม</span>
+            <div class="footer-contact">
+              <strong>ศูนย์บริการผลิตภัณฑ์สุขภาพเบ็ดเสร็จ สำนักงานสาธารณสุขจังหวัดนครปฐม</strong>
+              <span><b>โทร.</b> 0 3424 3620 - 22 , 0 3427 0349 ต่อ 124 หรือ 230</span>
+              <span><b>e-mail:</b> <a href="mailto:fdapv73@fda.moph.go.th">fdapv73@fda.moph.go.th</a></span>
+            </div>
             <div class="visitor-stats" id="visitorStats" aria-live="polite">
               <span>ผู้เข้าชมวันนี้ <strong id="todayVisitors">—</strong> คน</span>
               <span>เปิดดูวันนี้ <strong id="todayPageViews">—</strong> ครั้ง</span>
