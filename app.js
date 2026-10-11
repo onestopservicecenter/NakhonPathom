@@ -200,6 +200,31 @@
           </div>
         </section>
 
+        <section class="visitor-strip">
+          <div class="container">
+            <div class="visitor-panel" id="visitorStats" aria-live="polite">
+              <div class="visitor-panel-title">
+                <span class="visitor-dot">●</span>
+                <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
+              </div>
+
+              <div class="visitor-metrics">
+                <div class="visitor-metric">
+                  <span>ผู้เข้าชมวันนี้</span>
+                  <strong id="todayVisitors">—</strong>
+                  <small>คน</small>
+                </div>
+
+                <div class="visitor-metric">
+                  <span>เปิดดูวันนี้</span>
+                  <strong id="todayPageViews">—</strong>
+                  <small>ครั้ง</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <div class="simple-footer">
           <div class="container footer-layout">
             <div class="footer-top">
@@ -218,29 +243,6 @@
                 <span class="footer-label">e-mail</span>
                 <strong>fdapv73@fda.moph.go.th</strong>
               </a>
-            </div>
-
-            <div class="footer-bottom">
-              <div class="visitor-panel" id="visitorStats" aria-live="polite">
-                <div class="visitor-panel-title">
-                  <span class="visitor-dot">●</span>
-                  <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
-                </div>
-
-                <div class="visitor-metrics">
-                  <div class="visitor-metric">
-                    <span>ผู้เข้าชมวันนี้</span>
-                    <strong id="todayVisitors">—</strong>
-                    <small>คน</small>
-                  </div>
-
-                  <div class="visitor-metric">
-                    <span>เปิดดูวันนี้</span>
-                    <strong id="todayPageViews">—</strong>
-                    <small>ครั้ง</small>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
