@@ -2,7 +2,7 @@
   "use strict";
 
   const ROOT = document.getElementById("root");
-  const CENTRAL_DRIVE = "https://drive.google.com/drive/folders/1dtzmMhlP1dCgt7fLgFgCQcs6MEsNOHzo";
+  const CENTRAL_DRIVE = "https://drive.google.com/drive/folders/1dtzmMhlP1dCgt7fLgFgCQcs6MEsNOHzo";\n  const PUBLIC_API_URL = "https://script.google.com/macros/s/AKfycbxfALaEJFu1IowoXy-83JoZiJqzQ9rIIhTp_HzYJJSrBpHU2Ms0lyjSQjFTdC6Qb9LN/exec";
 
   const banners = [
     "./assets/banners/consumer-protection.gif",
@@ -202,6 +202,10 @@
         <div class="simple-footer">
           <div class="container">
             <span>สำนักงานสาธารณสุขจังหวัดนครปฐม</span>
+            <div class="visitor-stats" id="visitorStats" aria-live="polite">
+              <span>ผู้เข้าชมวันนี้ <strong id="todayVisitors">—</strong> คน</span>
+              <span>เปิดดูวันนี้ <strong id="todayPageViews">—</strong> ครั้ง</span>
+            </div>
             <a href="https://fda73.moph.go.th">fda73.moph.go.th</a>
           </div>
         </div>
@@ -249,16 +253,16 @@ const serviceLinks = {
   1: "", // ติดต่อ-สอบถาม OSSC Line OpenChat รหัส OSSC73
   2: "", // ติดตามคำขอยื่นที่ OSSC นครปฐม
   3: "", // ยื่น E-Submission
-  4: "./services/food-license.html", // ขออนุญาตอาหาร
-  5: "", // ขออนุญาตยา
-  6: "", // ขออนุญาตผลิตภัณฑ์สมุนไพร
-  7: "", // ขออนุญาตวัตถุเสพติด
-  8: "", // ขออนุญาตเครื่องสำอาง
-  9: "", // ขออนุญาตวัตถุอันตราย
-  10: "", // ขออนุญาตเครื่องมือแพทย์
+  4: "./services/service.html?category="+encodeURIComponent("อาหาร"), // ขออนุญาตอาหาร
+  5: "./services/service.html?category="+encodeURIComponent("ยา"), // ขออนุญาตยา
+  6: "./services/service.html?category="+encodeURIComponent("ผลิตภัณฑ์สมุนไพร"), // ขออนุญาตผลิตภัณฑ์สมุนไพร
+  7: "./services/service.html?category="+encodeURIComponent("วัตถุเสพติด"), // ขออนุญาตวัตถุเสพติด
+  8: "./services/service.html?category="+encodeURIComponent("เครื่องสำอาง"), // ขออนุญาตเครื่องสำอาง
+  9: "./services/service.html?category="+encodeURIComponent("วัตถุอันตราย"), // ขออนุญาตวัตถุอันตราย
+  10: "./services/service.html?category="+encodeURIComponent("เครื่องมือแพทย์"), // ขออนุญาตเครื่องมือแพทย์
   11: "", // BizPortal
-  12: "", // ขออนุญาตสถานพยาบาล & การประกอบโรคศิลปะ
-  13: "", // ขออนุญาตสถานประกอบการเพื่อสุขภาพ
+  12: "./services/service.html?category="+encodeURIComponent("สถานพยาบาล"), // ขออนุญาตสถานพยาบาล & การประกอบโรคศิลปะ
+  13: "./services/service.html?category="+encodeURIComponent("สถานประกอบการเพื่อสุขภาพ"), // ขออนุญาตสถานประกอบการเพื่อสุขภาพ
   14: "", // ข้อมูลสถานประกอบการ/ผลิตภัณฑ์สุขภาพ/โฆษณา
   15: "", // ปิดทำการ/ประชุมประจำเดือน
   16: "", // ให้คำปรึกษาออนไลน์ E-Consult
@@ -287,13 +291,74 @@ const serviceIcons = Array.from({ length: 27 }, (_, index) => {
 
 
 
+  function getOrCreateVisitorId() {
+    const key = "OSSC73_VISITOR_ID";
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : "v-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+      localStorage.setItem(key, id);
+    }
+    return id;
+  }
+
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
+      const callbackName = "__ossc73_cb_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+      const script = document.createElement("script");
+      const separator = url.includes("?") ? "&" : "?";
+      const cleanup = () => {
+        try { delete window[callbackName]; } catch (_) { window[callbackName] = undefined; }
+        script.remove();
+      };
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error("timeout"));
+      }, 12000);
+      window[callbackName] = data => {
+        clearTimeout(timeout);
+        cleanup();
+        resolve(data);
+      };
+      script.onerror = () => {
+        clearTimeout(timeout);
+        cleanup();
+        reject(new Error("network"));
+      };
+      script.src = url + separator + "callback=" + encodeURIComponent(callbackName) + "&_=" + Date.now();
+      document.head.appendChild(script);
+    });
+  }
+
+  async function trackAndRenderVisitorStats() {
+    const box = document.getElementById("visitorStats");
+    if (!box) return;
+    try {
+      const visitorId = getOrCreateVisitorId();
+      const page = location.pathname + location.search;
+      const result = await jsonp(
+        PUBLIC_API_URL +
+        "?mode=visit&visitorId=" + encodeURIComponent(visitorId) +
+        "&page=" + encodeURIComponent(page)
+      );
+      if (!result || !result.success || !result.stats) return;
+      const todayVisitors = document.getElementById("todayVisitors");
+      const todayPageViews = document.getElementById("todayPageViews");
+      if (todayVisitors) todayVisitors.textContent = Number(result.stats.todayUsers || 0).toLocaleString("th-TH");
+      if (todayPageViews) todayPageViews.textContent = Number(result.stats.todayPageViews || 0).toLocaleString("th-TH");
+    } catch (error) {
+      console.warn("Visitor stats unavailable", error);
+    }
+  }
+
   function bindHomeEvents() {
     document.getElementById("homeButton").addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     document.getElementById("staffButton").addEventListener("click", () => {
-      window.open(CENTRAL_DRIVE, "_blank", "noopener");
+      window.open("./staff/", "_blank", "noopener");
     });
 
     const menuButton = document.getElementById("menuButton");
