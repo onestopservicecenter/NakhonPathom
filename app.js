@@ -206,6 +206,7 @@
               <div class="visitor-panel-title">
                 <span class="visitor-dot">●</span>
                 <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
+                <a class="visitor-history-link" href="./services/stats.html">ดูสถิติย้อนหลัง</a>
               </div>
 
               <div class="visitor-metrics">
