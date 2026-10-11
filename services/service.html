@@ -51,6 +51,8 @@
     .file-icon svg{width:18px;height:18px;display:block}
     .file-name-note{font-size:.83rem;color:#81918e;margin-top:3px}
 
+    .visitor-strip{background:#f7fbf9;border-top:1px solid #d8e7e2;padding:14px 0 12px}
+    .visitor-strip .container{display:flex;justify-content:flex-start}
     .simple-footer{border-top:1px solid #d8e7e2;background:linear-gradient(180deg,#fbfdfc 0%,#f4faf7 100%)}
     .simple-footer .footer-layout{display:block;padding:22px 0 18px}
     .footer-top{display:grid;grid-template-columns:minmax(340px,1.5fr) minmax(260px,.9fr) minmax(250px,.8fr);gap:28px;align-items:center}
@@ -103,6 +105,31 @@
   </div>
 </main>
 
+<section class="visitor-strip">
+  <div class="container">
+    <div class="visitor-panel" aria-live="polite">
+      <div class="visitor-panel-title">
+        <span class="visitor-dot">●</span>
+        <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
+      </div>
+
+      <div class="visitor-metrics">
+        <div class="visitor-metric">
+          <span>ผู้เข้าชมวันนี้</span>
+          <strong id="todayVisitors">—</strong>
+          <small>คน</small>
+        </div>
+
+        <div class="visitor-metric">
+          <span>เปิดดูวันนี้</span>
+          <strong id="todayPageViews">—</strong>
+          <small>ครั้ง</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="simple-footer">
   <div class="container footer-layout">
     <div class="footer-top">
@@ -121,29 +148,6 @@
         <span class="footer-label">e-mail</span>
         <strong>fdapv73@fda.moph.go.th</strong>
       </a>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="visitor-panel" aria-live="polite">
-        <div class="visitor-panel-title">
-          <span class="visitor-dot">●</span>
-          <strong>สถิติผู้เข้าชมเว็บไซต์</strong>
-        </div>
-
-        <div class="visitor-metrics">
-          <div class="visitor-metric">
-            <span>ผู้เข้าชมวันนี้</span>
-            <strong id="todayVisitors">—</strong>
-            <small>คน</small>
-          </div>
-
-          <div class="visitor-metric">
-            <span>เปิดดูวันนี้</span>
-            <strong id="todayPageViews">—</strong>
-            <small>ครั้ง</small>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </footer>
