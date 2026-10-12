@@ -241,14 +241,45 @@ function renderActionButton(file){
   </a>`;
 }
 
-function renderDocumentItem(doc,index){
-  const files=Array.isArray(doc&&doc.files)?doc.files:[];
+function isBaseDriveFile(file){
+  return Boolean(
+    String(file&&file.fileItemId||"").trim() &&
+    !String(file&&file.parentFileItemId||"").trim() &&
+    String(file&&file.fileName||"").trim()
+  );
+}
 
-  const orderedFiles=[...files].sort((a,b)=>
+function renderResourceRow(baseFile,childLinks,index,doc){
+  const baseName=stripFileExtension(
+    String(baseFile&&baseFile.fileName||"").trim()
+  )||String(doc&&doc.title||"เอกสาร").trim();
+
+  const actions=[
+    baseFile,
+    ...childLinks
+  ]
+    .filter(file=>String(file&&file.url||"").trim())
+    .sort((a,b)=>
+      Number(a&&a.displayOrder||0)-Number(b&&b.displayOrder||0)
+    )
+    .map(renderActionButton)
+    .join("");
+
+  return `<article class="doc">
+    <div class="doc-index">${Number(index||0)+1}</div>
+    <div class="doc-title">${escapeHtml(baseName)}</div>
+    <div class="doc-actions">
+      ${actions||'<span class="file-name-note">ยังไม่มีไฟล์/ลิงก์</span>'}
+    </div>
+  </article>`;
+}
+
+function renderStandaloneDocumentRow(doc,files,index){
+  const ordered=[...files].sort((a,b)=>
     Number(a&&a.displayOrder||0)-Number(b&&b.displayOrder||0)
   );
 
-  const actions=orderedFiles
+  const actions=ordered
     .filter(file=>String(file&&file.url||"").trim())
     .map(renderActionButton)
     .join("");
@@ -260,6 +291,54 @@ function renderDocumentItem(doc,index){
       ${actions||'<span class="file-name-note">ยังไม่มีไฟล์/ลิงก์</span>'}
     </div>
   </article>`;
+}
+
+function renderDocumentResources(doc,startIndex){
+  const files=Array.isArray(doc&&doc.files)?doc.files:[];
+  const baseFiles=files.filter(isBaseDriveFile);
+
+  if(!baseFiles.length){
+    return {
+      html:renderStandaloneDocumentRow(doc,files,startIndex),
+      count:1
+    };
+  }
+
+  const rows=baseFiles.map((baseFile,offset)=>{
+    const baseId=String(baseFile.fileItemId||"").trim();
+
+    const childLinks=files.filter(file=>
+      String(file&&file.parentFileItemId||"").trim()===baseId
+    );
+
+    return renderResourceRow(
+      baseFile,
+      childLinks,
+      Number(startIndex||0)+offset,
+      doc
+    );
+  });
+
+  const unassignedLinks=files.filter(file=>{
+    const parentId=String(file&&file.parentFileItemId||"").trim();
+    const hasFileName=String(file&&file.fileName||"").trim();
+    return !hasFileName && !parentId;
+  });
+
+  if(unassignedLinks.length){
+    rows.push(
+      renderStandaloneDocumentRow(
+        doc,
+        unassignedLinks,
+        Number(startIndex||0)+rows.length
+      )
+    );
+  }
+
+  return {
+    html:rows.join(""),
+    count:rows.length
+  };
 }
 
 function renderCategory(category){
@@ -291,8 +370,21 @@ function renderCategory(category){
           const docs=Array.isArray(topic.documents)?topic.documents:[];
 
           const fileCards=[];
-          docs.forEach((doc,docIndex)=>{
-            fileCards.push(renderDocumentItem(doc,docIndex));
+          let resourceIndex=0;
+
+          docs.forEach(doc=>{
+            const rendered=
+              renderDocumentResources(
+                doc,
+                resourceIndex
+              );
+
+            fileCards.push(
+              rendered.html
+            );
+
+            resourceIndex +=
+              rendered.count;
           });
 
           return `<div class="topic ${topicIndex===0?"open":""}">
