@@ -226,23 +226,66 @@ function chevronIcon(){
   </svg>`;
 }
 
-function renderFileItem(file,doc){
-  const fileName=String(file&&file.fileName||"").trim();
-  const displayTitle=stripFileExtension(fileName)||String(doc&&doc.title||"เอกสาร").trim();
-  const label=fileLabel(file);
+function renderActionButton(file){
   const type=String(file&&file.fileType||"").toLowerCase();
-  const icon=type==="pdf"?pdfIcon():pdfIcon();
+  const icon=pdfIcon();
+  return `<a class="file-btn" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">
+    <span class="file-icon">${icon}</span>
+    <span>${escapeHtml(fileLabel(file))}</span>
+  </a>`;
+}
 
-  return `<article class="doc">
-    <div class="doc-title">${escapeHtml(displayTitle)}</div>
-    ${fileName&&displayTitle!==String(doc&&doc.title||"").trim()?'<div class="file-name-note">'+escapeHtml(fileName)+'</div>':""}
-    <div class="doc-actions">
-      <a class="file-btn" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">
-        <span class="file-icon">${icon}</span>
-        <span>${escapeHtml(label)}</span>
-      </a>
-    </div>
-  </article>`;
+function renderDocumentItem(doc){
+  const files=Array.isArray(doc&&doc.files)?doc.files:[];
+
+  const baseFiles=files.filter(file=>!String(file&&file.parentFileItemId||"").trim());
+  const childLinks=files.filter(file=>String(file&&file.parentFileItemId||"").trim());
+
+  const cards=[];
+
+  baseFiles.forEach(file=>{
+    const fileId=String(file&&file.fileItemId||"").trim();
+    const children=childLinks.filter(link=>String(link&&link.parentFileItemId||"").trim()===fileId);
+    const fileName=String(file&&file.fileName||"").trim();
+    const displayTitle=stripFileExtension(fileName)||String(doc&&doc.title||"เอกสาร").trim();
+
+    cards.push(`<article class="doc">
+      <div class="doc-title">${escapeHtml(displayTitle)}</div>
+      ${fileName&&displayTitle!==String(doc&&doc.title||"").trim()?'<div class="file-name-note">'+escapeHtml(fileName)+'</div>':""}
+      <div class="doc-actions">
+        ${renderActionButton(file)}
+        ${children.map(renderActionButton).join("")}
+      </div>
+    </article>`);
+  });
+
+  const documentLevelLinks=baseFiles.filter(file=>String(file&&file.externalUrl||"").trim());
+  if(!baseFiles.length&&files.length){
+    cards.push(`<article class="doc">
+      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
+      <div class="doc-actions">
+        ${files.map(renderActionButton).join("")}
+      </div>
+    </article>`);
+  }else if(baseFiles.length===0&&!files.length){
+    cards.push(`<article class="doc">
+      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
+      <div class="file-name-note">ยังไม่มีไฟล์แนบ</div>
+    </article>`);
+  }
+
+  const unattachedLinks=childLinks.filter(link=>{
+    const parent=String(link&&link.parentFileItemId||"").trim();
+    return parent&&!baseFiles.some(file=>String(file&&file.fileItemId||"").trim()===parent);
+  });
+  if(unattachedLinks.length){
+    cards.push(`<article class="doc">
+      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
+      <div class="doc-actions">${unattachedLinks.map(renderActionButton).join("")}</div>
+    </article>`);
+  }
+
+  return cards.join("");
 }
 
 function renderCategory(category){
@@ -275,15 +318,7 @@ function renderCategory(category){
 
           const fileCards=[];
           docs.forEach(doc=>{
-            const files=Array.isArray(doc.files)?doc.files:[];
-            if(files.length){
-              files.forEach(file=>fileCards.push(renderFileItem(file,doc)));
-            }else{
-              fileCards.push(`<article class="doc">
-                <div class="doc-title">${escapeHtml(doc.title)}</div>
-                <div class="file-name-note">ยังไม่มีไฟล์แนบ</div>
-              </article>`);
-            }
+            fileCards.push(renderDocumentItem(doc));
           });
 
           return `<div class="topic ${topicIndex===0?"open":""}">
