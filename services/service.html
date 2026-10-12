@@ -41,9 +41,9 @@
     .topic-body{display:none;padding-bottom:8px}
     .topic.open .topic-body{display:block}
     .doc-list{display:grid;gap:14px}
-    .doc{border:1px solid #dbe9e4;border-radius:18px;padding:17px 18px;background:#fbfdfc}
+    .doc{border:1px solid #dbe9e4;border-radius:18px;padding:14px 16px;background:#fbfdfc;display:flex;align-items:center;justify-content:space-between;gap:16px}
     .doc-title{font-weight:800;line-height:1.55;color:#173f38;font-size:1rem}
-    .doc-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:13px}
+    .doc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:0;justify-content:flex-end}
     .file-btn{display:inline-flex;align-items:center;gap:10px;padding:9px 14px 9px 10px;border-radius:13px;background:#f1faf7;color:#087b71;font-size:.9rem;font-weight:800;border:1px solid #bddfd4;transition:.18s ease}
     .file-btn:hover{background:#0a8f84;color:#fff;transform:translateY(-1px);box-shadow:0 5px 14px rgba(10,143,132,.18)}
     .file-icon{width:34px;height:34px;border-radius:10px;background:#0a8f84;color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px}
@@ -79,7 +79,7 @@
     .visitor-metric strong{color:#0a7f72;font-size:1rem;font-weight:900;min-width:1.2ch;text-align:center}
     .visitor-metric small{color:#6c8680;font-size:.72rem}
     @media(max-width:980px){.footer-top{grid-template-columns:1fr 1fr}.footer-email{grid-column:1/-1;justify-self:start;text-align:left}}
-    @media(max-width:680px){.visitor-strip .container{padding-left:14px;padding-right:14px}.nav-links a:not(.staff-link){display:none}.simple-footer .footer-layout{padding:18px 14px}.footer-top{grid-template-columns:1fr;gap:14px;text-align:center}.footer-phone{padding-left:0;border-left:0}.footer-email{grid-column:auto;justify-self:center;text-align:center}.footer-bottom{justify-content:center}.visitor-panel{width:100%;flex-direction:column;align-items:stretch}.visitor-panel-title{justify-content:center}.visitor-metrics{justify-content:center;flex-wrap:wrap}}
+    @media(max-width:680px){.doc{align-items:flex-start;flex-direction:column}.doc-actions{justify-content:flex-start}.visitor-strip .container{padding-left:14px;padding-right:14px}.nav-links a:not(.staff-link){display:none}.simple-footer .footer-layout{padding:18px 14px}.footer-top{grid-template-columns:1fr;gap:14px;text-align:center}.footer-phone{padding-left:0;border-left:0}.footer-email{grid-column:auto;justify-self:center;text-align:center}.footer-bottom{justify-content:center}.visitor-panel{width:100%;flex-direction:column;align-items:stretch}.visitor-panel-title{justify-content:center}.visitor-metrics{justify-content:center;flex-wrap:wrap}}
 
   </style>
 </head>
@@ -238,54 +238,21 @@ function renderActionButton(file){
 function renderDocumentItem(doc){
   const files=Array.isArray(doc&&doc.files)?doc.files:[];
 
-  const baseFiles=files.filter(file=>!String(file&&file.parentFileItemId||"").trim());
-  const childLinks=files.filter(file=>String(file&&file.parentFileItemId||"").trim());
+  const orderedFiles=[...files].sort((a,b)=>
+    Number(a&&a.displayOrder||0)-Number(b&&b.displayOrder||0)
+  );
 
-  const cards=[];
+  const actions=orderedFiles
+    .filter(file=>String(file&&file.url||"").trim())
+    .map(renderActionButton)
+    .join("");
 
-  baseFiles.forEach(file=>{
-    const fileId=String(file&&file.fileItemId||"").trim();
-    const children=childLinks.filter(link=>String(link&&link.parentFileItemId||"").trim()===fileId);
-    const fileName=String(file&&file.fileName||"").trim();
-    const displayTitle=stripFileExtension(fileName)||String(doc&&doc.title||"เอกสาร").trim();
-
-    cards.push(`<article class="doc">
-      <div class="doc-title">${escapeHtml(displayTitle)}</div>
-      ${fileName&&displayTitle!==String(doc&&doc.title||"").trim()?'<div class="file-name-note">'+escapeHtml(fileName)+'</div>':""}
-      <div class="doc-actions">
-        ${renderActionButton(file)}
-        ${children.map(renderActionButton).join("")}
-      </div>
-    </article>`);
-  });
-
-  const documentLevelLinks=baseFiles.filter(file=>String(file&&file.externalUrl||"").trim());
-  if(!baseFiles.length&&files.length){
-    cards.push(`<article class="doc">
-      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
-      <div class="doc-actions">
-        ${files.map(renderActionButton).join("")}
-      </div>
-    </article>`);
-  }else if(baseFiles.length===0&&!files.length){
-    cards.push(`<article class="doc">
-      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
-      <div class="file-name-note">ยังไม่มีไฟล์แนบ</div>
-    </article>`);
-  }
-
-  const unattachedLinks=childLinks.filter(link=>{
-    const parent=String(link&&link.parentFileItemId||"").trim();
-    return parent&&!baseFiles.some(file=>String(file&&file.fileItemId||"").trim()===parent);
-  });
-  if(unattachedLinks.length){
-    cards.push(`<article class="doc">
-      <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร"))}</div>
-      <div class="doc-actions">${unattachedLinks.map(renderActionButton).join("")}</div>
-    </article>`);
-  }
-
-  return cards.join("");
+  return `<article class="doc">
+    <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร").trim())}</div>
+    <div class="doc-actions">
+      ${actions||'<span class="file-name-note">ยังไม่มีไฟล์/ลิงก์</span>'}
+    </div>
+  </article>`;
 }
 
 function renderCategory(category){
