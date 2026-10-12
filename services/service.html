@@ -235,7 +235,7 @@ function renderActionButton(file){
   </a>`;
 }
 
-function renderDocumentItem(doc){
+function renderDocumentItem(doc,index){
   const files=Array.isArray(doc&&doc.files)?doc.files:[];
 
   const orderedFiles=[...files].sort((a,b)=>
