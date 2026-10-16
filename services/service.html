@@ -63,17 +63,18 @@
     .visitor-panel{width:min(560px,100%);min-height:76px}
     .visitor-history-link{margin-left:4px;color:#0a7f72;font-size:.76rem;font-weight:700;text-decoration:none;border-bottom:1px dotted #0a7f72}
     .visitor-history-link:hover{color:#075f56}
-    .simple-footer{border-top:1px solid #d8e7e2;background:linear-gradient(180deg,#fbfdfc 0%,#f4faf7 100%)}
-    .simple-footer .footer-layout{display:block;padding:22px 0 18px}
-    .footer-top{display:grid;grid-template-columns:minmax(340px,1.5fr) minmax(260px,.9fr) minmax(250px,.8fr);gap:28px;align-items:center}
-    .footer-brand-block{display:flex;flex-direction:column;gap:3px;line-height:1.45}
-    .footer-brand-block strong{color:#0b5a4f;font-size:1.02rem;font-weight:800}
-    .footer-brand-block span{color:#496c66;font-weight:600}
-    .footer-phone{display:flex;flex-direction:column;gap:2px;color:#224e48;padding-left:18px;border-left:1px solid #d7e6e1}
-    .footer-label{color:#739089;font-size:.78rem;font-weight:700}
-    .footer-phone strong{font-size:.93rem;font-weight:700}
-    .footer-email{display:flex;flex-direction:column;gap:3px;color:#0b7f72;text-decoration:none;font-weight:700;justify-self:end;text-align:right}
-    .footer-email strong{color:#0b5a4f}
+    .simple-footer{border-top:1px solid #d8e7e2;background:linear-gradient(180deg,#f8fcfa 0%,#eef7f3 100%);padding:26px 0 30px}
+    .simple-footer .footer-layout{display:block;padding:0}
+    .footer-top{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(220px,.85fr) minmax(240px,.9fr);gap:0;align-items:stretch;background:#fff;border:1px solid #d9e8e3;border-radius:20px;box-shadow:0 10px 30px rgba(18,63,58,.06);overflow:hidden}
+    .footer-brand-block,.footer-phone,.footer-email{padding:22px 24px;min-height:108px;justify-content:center}
+    .footer-brand-block{display:flex;flex-direction:column;gap:5px;line-height:1.5}
+    .footer-brand-block strong{color:#0b5a4f;font-size:1.06rem;font-weight:800}
+    .footer-brand-block span{color:#496c66;font-weight:600;font-size:.93rem}
+    .footer-phone{display:flex;flex-direction:column;gap:4px;color:#224e48;border-left:1px solid #e1ece8}
+    .footer-label{color:#6f8b84;font-size:.76rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+    .footer-phone strong{font-size:.95rem;font-weight:800;line-height:1.45}
+    .footer-email{display:flex;flex-direction:column;gap:6px;color:#0b7f72;text-decoration:none;font-weight:700;border-left:1px solid #e1ece8}
+    .footer-email strong{color:#0b5a4f;font-size:.95rem;overflow-wrap:anywhere}
     .footer-email:hover strong{text-decoration:underline}
     .footer-bottom{margin-top:16px;padding-top:14px;border-top:1px dashed #d8e7e2;display:flex;justify-content:flex-start}
     .visitor-panel{display:inline-flex;align-items:center;gap:14px;padding:10px 14px;border:1px solid #cfe3dc;border-radius:16px;background:#fff;box-shadow:0 6px 18px rgba(20,76,67,.06)}
@@ -84,8 +85,8 @@
     .visitor-metric{display:grid;grid-template-columns:auto auto auto;align-items:baseline;gap:5px;padding:7px 10px;border-radius:11px;background:#eef8f4;color:#55736e;font-size:.79rem}
     .visitor-metric strong{color:#0a7f72;font-size:1rem;font-weight:900;min-width:1.2ch;text-align:center}
     .visitor-metric small{color:#6c8680;font-size:.72rem}
-    @media(max-width:980px){.footer-top{grid-template-columns:1fr 1fr}.footer-email{grid-column:1/-1;justify-self:start;text-align:left}}
-    @media(max-width:680px){.doc{grid-template-columns:34px 1fr}.doc-actions{grid-column:2;justify-content:flex-start}.visitor-strip .container{padding-left:14px;padding-right:14px}.nav-links a:not(.staff-link){display:none}.simple-footer .footer-layout{padding:18px 14px}.footer-top{grid-template-columns:1fr;gap:14px;text-align:center}.footer-phone{padding-left:0;border-left:0}.footer-email{grid-column:auto;justify-self:center;text-align:center}.footer-bottom{justify-content:center}.visitor-panel{width:100%;flex-direction:column;align-items:stretch}.visitor-panel-title{justify-content:center}.visitor-metrics{justify-content:center;flex-wrap:wrap}}
+    @media(max-width:980px){.footer-top{grid-template-columns:1fr 1fr}.footer-email{grid-column:1/-1;border-left:0;border-top:1px solid #e1ece8}.footer-phone{border-left:1px solid #e1ece8}}
+    @media(max-width:680px){.doc{grid-template-columns:34px 1fr}.doc-actions{grid-column:2;justify-content:flex-start}.visitor-strip .container{padding-left:14px;padding-right:14px}.nav-links a:not(.staff-link){display:none}.simple-footer{padding:18px 0 22px}.simple-footer .footer-layout{padding:0 14px}.footer-top{grid-template-columns:1fr;text-align:left;border-radius:16px}.footer-brand-block,.footer-phone,.footer-email{min-height:auto;padding:18px 20px}.footer-phone,.footer-email{border-left:0;border-top:1px solid #e1ece8}.footer-email{grid-column:auto}.footer-bottom{justify-content:center}.visitor-panel{width:100%;flex-direction:column;align-items:stretch}.visitor-panel-title{justify-content:center}.visitor-metrics{justify-content:center;flex-wrap:wrap}}
 
   </style>
 </head>
@@ -266,7 +267,7 @@ function renderResourceRow(baseFile,childLinks,index,doc){
     .join("");
 
   return `<article class="doc">
-    <div class="doc-index">${Number(index||0)+1}</div>
+    <div class="doc-index">${String(Number(index||0)+1).padStart(2,"0")}</div>
     <div class="doc-title">${escapeHtml(baseName)}</div>
     <div class="doc-actions">
       ${actions||'<span class="file-name-note">ยังไม่มีไฟล์/ลิงก์</span>'}
@@ -285,7 +286,7 @@ function renderStandaloneDocumentRow(doc,files,index){
     .join("");
 
   return `<article class="doc">
-    <div class="doc-index">${Number(index||0)+1}</div>
+    <div class="doc-index">${String(Number(index||0)+1).padStart(2,"0")}</div>
     <div class="doc-title">${escapeHtml(String(doc&&doc.title||"เอกสาร").trim())}</div>
     <div class="doc-actions">
       ${actions||'<span class="file-name-note">ยังไม่มีไฟล์/ลิงก์</span>'}
