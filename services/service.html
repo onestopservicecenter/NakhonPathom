@@ -52,6 +52,7 @@
     .file-btn.type-youtube{background:#fff0f0;color:#c13737;border-color:#efcdcd}
     .file-btn.type-video{background:#f4f0ff;color:#6b55a8;border-color:#ddd4f3}
     .file-btn.type-word{background:#eef4ff;color:#3d67a5;border-color:#d4e1f5}
+    .file-btn.type-excel{background:#eef9f1;color:#2f7a4b;border-color:#cfe8d8}
     .file-icon{width:auto;height:auto;border-radius:0;background:transparent;color:currentColor;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
     .file-btn:hover .file-icon{background:transparent}
     .file-icon svg{width:15px;height:15px;display:block}
@@ -205,14 +206,63 @@ async function trackVisit(){
     }
   }catch(e){console.warn("stats unavailable",e)}
 }
+function getResourceType(file){
+  const type=String(file&&file.fileType||"").toLowerCase().trim();
+  const name=String(file&&file.fileName||"").toLowerCase().trim();
+
+  if(type==="pdf" || name.endsWith(".pdf"))return "pdf";
+
+  if(
+    type==="word" ||
+    type==="doc" ||
+    type==="docx" ||
+    name.endsWith(".doc") ||
+    name.endsWith(".docx")
+  )return "word";
+
+  if(
+    type==="excel" ||
+    type==="xls" ||
+    type==="xlsx" ||
+    type==="csv" ||
+    type==="spreadsheet" ||
+    name.endsWith(".xls") ||
+    name.endsWith(".xlsx") ||
+    name.endsWith(".csv")
+  )return "excel";
+
+  if(type==="video" || type==="youtube")return "video";
+  if(type==="website")return "website";
+
+  return type || "file";
+}
+
+function resourceTypeOrder(file){
+  const order={
+    pdf:1,
+    word:2,
+    excel:3,
+    video:4,
+    website:5
+  };
+
+  return order[getResourceType(file)] || 99;
+}
+
 function fileLabel(file){
   if(file.buttonLabel)return file.buttonLabel;
-  const type=String(file.fileType||"").toLowerCase();
+
+  const type=getResourceType(file);
+
   if(type==="pdf")return "PDF";
   if(type==="word")return "Word";
-  if(type==="youtube")return "YouTube";
-  if(type==="video")return "วิดีโอ";
+  if(type==="excel")return "Excel";
+  if(type==="video"){
+    const rawType=String(file&&file.fileType||"").toLowerCase();
+    return rawType==="youtube" ? "YouTube" : "วิดีโอ";
+  }
   if(type==="website")return "เว็บไซต์";
+
   return "เปิดไฟล์";
 }
 function stripFileExtension(name){
@@ -234,8 +284,22 @@ function chevronIcon(){
 }
 
 function renderActionButton(file){
-  const type=String(file&&file.fileType||"").toLowerCase();
-  const icon=type==="website"?"🌐":type==="youtube"?"▶":type==="video"?"🎬":type==="word"?"W":"📄";
+  const type=getResourceType(file);
+  const rawType=String(file&&file.fileType||"").toLowerCase();
+
+  const icon=
+    type==="website"
+      ? "🌐"
+      : rawType==="youtube"
+        ? "▶"
+        : type==="video"
+          ? "🎬"
+          : type==="word"
+            ? "W"
+            : type==="excel"
+              ? "X"
+              : "📄";
+
   return `<a class="file-btn type-${escapeHtml(type||"file")}" href="${escapeHtml(file.url)}" target="_blank" rel="noopener noreferrer">
     <span class="file-icon">${icon}</span>
     <span>${escapeHtml(fileLabel(file))}</span>
@@ -276,9 +340,20 @@ function renderResourceRow(baseFile,childLinks,index,doc){
 }
 
 function renderStandaloneDocumentRow(doc,files,index){
-  const ordered=[...files].sort((a,b)=>
-    Number(a&&a.displayOrder||0)-Number(b&&b.displayOrder||0)
-  );
+  const ordered=[...files].sort((a,b)=>{
+    const typeDiff=
+      resourceTypeOrder(a)-
+      resourceTypeOrder(b);
+
+    if(typeDiff!==0){
+      return typeDiff;
+    }
+
+    return (
+      Number(a&&a.displayOrder||0)-
+      Number(b&&b.displayOrder||0)
+    );
+  });
 
   const actions=ordered
     .filter(file=>String(file&&file.url||"").trim())
@@ -295,50 +370,19 @@ function renderStandaloneDocumentRow(doc,files,index){
 }
 
 function renderDocumentResources(doc,startIndex){
-  const files=Array.isArray(doc&&doc.files)?doc.files:[];
-  const baseFiles=files.filter(isBaseDriveFile);
-
-  if(!baseFiles.length){
-    return {
-      html:renderStandaloneDocumentRow(doc,files,startIndex),
-      count:1
-    };
-  }
-
-  const rows=baseFiles.map((baseFile,offset)=>{
-    const baseId=String(baseFile.fileItemId||"").trim();
-
-    const childLinks=files.filter(file=>
-      String(file&&file.parentFileItemId||"").trim()===baseId
-    );
-
-    return renderResourceRow(
-      baseFile,
-      childLinks,
-      Number(startIndex||0)+offset,
-      doc
-    );
-  });
-
-  const unassignedLinks=files.filter(file=>{
-    const parentId=String(file&&file.parentFileItemId||"").trim();
-    const hasFileName=String(file&&file.fileName||"").trim();
-    return !hasFileName && !parentId;
-  });
-
-  if(unassignedLinks.length){
-    rows.push(
-      renderStandaloneDocumentRow(
-        doc,
-        unassignedLinks,
-        Number(startIndex||0)+rows.length
-      )
-    );
-  }
+  const files=
+    Array.isArray(doc&&doc.files)
+      ? doc.files
+      : [];
 
   return {
-    html:rows.join(""),
-    count:rows.length
+    html:
+      renderStandaloneDocumentRow(
+        doc,
+        files,
+        startIndex
+      ),
+    count:1
   };
 }
 
