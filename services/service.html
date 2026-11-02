@@ -40,6 +40,24 @@
     .topic.open .topic-toggle{background:#dff2eb}
     .topic-body{display:none;padding-bottom:8px}
     .topic.open .topic-body{display:block}
+    /* Topic cards: visual-only redesign; document/resource behavior is unchanged. */
+    .section-card{background:transparent;border:0;border-radius:0;box-shadow:none;margin:0}
+    .section-head{display:none}
+    .section-body{display:block!important;padding:0}
+    .topic-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .topic{border:0;padding:0;min-width:0}
+    .topic-head{min-height:150px;border:1px solid #e4e4e4;border-radius:10px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.10);padding:18px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;transition:.18s ease}
+    .topic-head:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.14)}
+    .topic.open .topic-head{background:#4596c7;border-color:#4596c7;color:#fff}
+    .topic-head strong{color:#111;font-size:1.02rem;line-height:1.35;font-weight:800}
+    .topic.open .topic-head strong{color:#fff}
+    .topic-card-icon{width:46px;height:46px;display:grid;place-items:center;color:#1f3340;font-size:2rem}
+    .topic.open .topic-card-icon{color:#fff}
+    .topic-toggle{display:none}
+    .topic-body{grid-column:1/-1;margin-top:4px;padding:18px;border-radius:12px;background:#fff;border:1px solid #dbe9e4}
+    .topic:not(.open) .topic-body{display:none}
+    @media(max-width:900px){.topic-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(max-width:640px){.topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.topic-head{min-height:126px;padding:12px 8px}.topic-head strong{font-size:.92rem}.topic-card-icon{width:38px;height:38px;font-size:1.65rem}}
     .doc-list{display:grid;gap:10px}
     .doc{border:1px solid #dbe9e4;border-radius:12px;padding:11px 12px;background:#fff;display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:12px}
     .doc-index{width:30px;height:30px;border-radius:8px;background:#f2f7f5;color:#42665f;display:grid;place-items:center;font-size:.82rem;font-weight:800}
@@ -410,7 +428,7 @@ function renderCategory(category){
         <span class="section-toggle">${chevronIcon()}</span>
       </button>
 
-      <div class="section-body">
+      <div class="section-body"><div class="topic-grid">
         ${topics.length?topics.map((topic,topicIndex)=>{
           const docs=Array.isArray(topic.documents)?topic.documents:[];
 
@@ -434,6 +452,7 @@ function renderCategory(category){
 
           return `<div class="topic ${topicIndex===0?"open":""}">
             <button type="button" class="topic-head" aria-expanded="${topicIndex===0?"true":"false"}">
+              <span class="topic-card-icon" aria-hidden="true">▤</span>
               <strong>${escapeHtml(topic.topicName)}</strong>
               <span class="topic-toggle">${chevronIcon()}</span>
             </button>
@@ -443,7 +462,7 @@ function renderCategory(category){
               </div>
             </div>
           </div>`;
-        }).join(""):'<div style="padding:16px 0;color:#81918e">ยังไม่มีหัวข้อย่อยที่เผยแพร่</div>'}
+        }).join(""):'<div style="padding:16px 0;color:#81918e">ยังไม่มีหัวข้อย่อยที่เผยแพร่</div>'}</div>
       </div>
     </section>`;
   }).join("");
