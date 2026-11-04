@@ -51,7 +51,8 @@
     .topic.open .topic-head{background:#4596c7;border-color:#4596c7;color:#fff}
     .topic-head strong{color:#111;font-size:1.02rem;line-height:1.35;font-weight:800}
     .topic.open .topic-head strong{color:#fff}
-    .topic-card-icon{width:46px;height:46px;display:grid;place-items:center;color:#1f3340;font-size:2rem}
+    .topic-card-icon{width:74px;height:74px;display:grid;place-items:center;color:#1f3340;font-size:2rem}
+    .topic-card-icon img{width:100%;height:100%;object-fit:contain;display:block}
     .topic.open .topic-card-icon{color:#fff}
     .topic-toggle{display:none}
     .topic-body{grid-column:1/-1;margin-top:4px;padding:18px;border-radius:12px;background:#fff;border:1px solid #dbe9e4}
@@ -452,7 +453,7 @@ function renderCategory(category){
 
           return `<div class="topic ${topicIndex===0?"open":""}">
             <button type="button" class="topic-head" aria-expanded="${topicIndex===0?"true":"false"}">
-              <span class="topic-card-icon" aria-hidden="true">▤</span>
+              <span class="topic-card-icon" aria-hidden="true">${category.categoryName.trim()==="อาหาร" ? `<img src="../assets/topic-icons/${topicIndex+1}.png" alt="" loading="lazy">` : "▤"}</span>
               <strong>${escapeHtml(topic.topicName)}</strong>
               <span class="topic-toggle">${chevronIcon()}</span>
             </button>
