@@ -55,7 +55,7 @@
     .topic.open .topic-card-icon{color:#fff}
     .topic-toggle{display:none}
     .topic-body{grid-column:1/-1;margin-top:4px;padding:18px;border-radius:12px;background:#fff;border:1px solid #dbe9e4}
-    .topic:not(.open) .topic-body{display:none}
+    .topic-body,.topic.open .topic-body,.topic:not(.open) .topic-body{display:none!important}
     @media(max-width:900px){.topic-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
     @media(max-width:640px){.topic-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.topic-head{min-height:170px;padding:10px 8px}.topic-card-icon{min-height:148px;width:100%;height:100%;font-size:1.65rem}}
     .doc-list{display:grid;gap:10px}
@@ -483,8 +483,10 @@ function renderCategory(category){
   document.querySelectorAll(".topic-head").forEach(btn=>{
     btn.addEventListener("click",()=>{
       const topic=btn.closest(".topic");
-      const isOpen=topic.classList.toggle("open");
-      btn.setAttribute("aria-expanded",isOpen?"true":"false");
+      const firstLink=topic.querySelector(".doc-actions a[href]");
+      if(firstLink){
+        window.open(firstLink.href,"_blank","noopener,noreferrer");
+      }
     });
   });
 }
