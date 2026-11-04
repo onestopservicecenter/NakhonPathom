@@ -455,8 +455,8 @@ function renderCategory(category){
               rendered.count;
           });
 
-          return `<div class="topic ${topicIndex===0?"open":""}">
-            <button type="button" class="topic-head" aria-expanded="${topicIndex===0?"true":"false"}">
+          return `<div class="topic">
+            <button type="button" class="topic-head" aria-expanded="false">
               <span class="topic-card-icon" aria-hidden="true">${category.categoryName.trim()==="อาหาร" ? `<img src="../assets/topic-icons/${topicIndex+1}.png" alt="" loading="lazy">` : "▤"}</span>
               <strong>${escapeHtml(`${String(topicIndex+1).padStart(2,"0")} ${String(topic.topicName||"").replace(/^\s*\d+[.)]?\s*/, "").trim()}`)}</strong>
               <span class="topic-toggle">${chevronIcon()}</span>
