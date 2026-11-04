@@ -485,10 +485,6 @@ function renderCategory(category){
       const topic=btn.closest(".topic");
       const isOpen=topic.classList.toggle("open");
       btn.setAttribute("aria-expanded",isOpen?"true":"false");
-      const firstLink=topic.querySelector(".doc-actions a[href]");
-      if(firstLink){
-        window.open(firstLink.href,"_blank","noopener,noreferrer");
-      }
     });
   });
 }
