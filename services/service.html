@@ -420,9 +420,9 @@ function renderCategory(category){
 
   target.className="";
 
-  target.innerHTML=sections.map((section,index)=>{
+  let foodTopicCount=0;\n  target.innerHTML=sections.map((section,index)=>{
     const topics=Array.isArray(section.topics)?section.topics:[];
-    const visibleTopics=category.categoryName.trim()==="อาหาร" ? topics.slice(0,12) : topics;
+    const visibleTopics=category.categoryName.trim()==="อาหาร"\n      ? topics.slice(0, Math.max(0, 12-foodTopicCount))\n      : topics;\n    if(category.categoryName.trim()==="อาหาร") foodTopicCount += visibleTopics.length;
 
     return `<section class="section-card ${index===0?"open":""}">
       <button type="button" class="section-head" aria-expanded="${index===0?"true":"false"}">
