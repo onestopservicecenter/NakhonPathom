@@ -49,8 +49,8 @@
     .topic-head{min-height:220px;border:1px solid #e4e4e4;border-radius:10px;background:#fff;box-shadow:0 3px 10px rgba(0,0,0,.10);padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:0;transition:.18s ease}
     .topic-head:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.14)}
     .topic.open .topic-head{background:#4596c7;border-color:#4596c7;color:#fff}
-    .topic-head strong{display:none}
-    .topic-card-icon{width:100%;height:100%;min-height:190px;display:grid;place-items:center;color:#1f3340;font-size:2rem}
+    .topic-head strong{display:none!important;visibility:hidden!important}
+    .topic-card-icon{width:100%;height:100%;min-height:190px;display:grid;place-items:center;color:#1f3340;font-size:2rem;position:relative;z-index:1}
     .topic-card-icon img{width:100%;height:100%;object-fit:contain;display:block}
     .topic.open .topic-card-icon{color:#fff}
     .topic-toggle{display:none}
