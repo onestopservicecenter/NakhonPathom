@@ -422,6 +422,7 @@ function renderCategory(category){
 
   target.innerHTML=sections.map((section,index)=>{
     const topics=Array.isArray(section.topics)?section.topics:[];
+    const visibleTopics=category.categoryName.trim()==="อาหาร" ? topics.slice(0,12) : topics;
 
     return `<section class="section-card ${index===0?"open":""}">
       <button type="button" class="section-head" aria-expanded="${index===0?"true":"false"}">
@@ -430,7 +431,7 @@ function renderCategory(category){
       </button>
 
       <div class="section-body"><div class="topic-grid">
-        ${topics.length?topics.map((topic,topicIndex)=>{
+        ${visibleTopics.length?visibleTopics.map((topic,topicIndex)=>{
           const docs=Array.isArray(topic.documents)?topic.documents:[];
 
           const fileCards=[];
